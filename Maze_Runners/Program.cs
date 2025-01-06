@@ -1,4 +1,5 @@
 ﻿using System;
+using Spectre.Console;
 
 namespace Maze_Runners
 {
@@ -7,11 +8,19 @@ namespace Maze_Runners
         static void Main(string[] args)
         {
             // Establece el tamaño de la consola
-            Console.BufferHeight = 40;
-            Console.BufferWidth = 120;
+            Console.BufferHeight = 44;
+            Console.BufferWidth = 180;
+
 
             // Abre el Menu de Inicio del juego
-            GameManager.Start();
+            //GameManager.Start();
+
+            
+
+            Maze maze = new Maze(10);
+            maze.GenerateMaze();
+
+            Console.ReadKey(true);
 
         }
     }

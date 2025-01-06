@@ -12,7 +12,7 @@ namespace Maze_Runners
         private string[] options;
 
         // Variable q almacena la opcion seleccionada
-        public string selectedOption { get; private set; }
+        public string SelectedOption { get; private set; }
 
         
         public Menu(string title, string[] options)
@@ -30,7 +30,7 @@ namespace Maze_Runners
         // Muestra el menu y sus distintas opciones, y se mantiene en espera de q se seleccione una
         public void SetMenu()
         {
-            selectedOption = AnsiConsole.Prompt(
+            SelectedOption = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                     .Title($"[green] {title} [/]?")
                     .PageSize(3)

@@ -7,6 +7,11 @@ namespace Maze_Runners
 {
     class GameManager
     {
+        private int players;
+
+
+
+
         public static void Start()
         {
             StartMainMenu();
@@ -24,7 +29,7 @@ namespace Maze_Runners
             mainMenu.SetMenu();
 
             // Abre seccion de creditos
-            if (mainMenu.selectedOption == "Creditos")
+            if (mainMenu.SelectedOption == "Creditos")
             {
                 AnsiConsole.MarkupLine("[blue]  >>[/]  [underline]This game was crated by[/] [underline][green3_1]Johan Daniel :heart_suit:[/][/]" + "\n\n");
 
@@ -35,7 +40,7 @@ namespace Maze_Runners
             }
 
             // Sale del juego
-            if (mainMenu.selectedOption == "Salir")
+            if (mainMenu.SelectedOption == "Salir")
             {
                 AnsiConsole.Write(new FigletText("Hasta la proxima").Color(Color.DeepSkyBlue1));
                 Console.ReadKey(true);
@@ -43,7 +48,7 @@ namespace Maze_Runners
             }
 
             // Inicia Menu de jugadores
-            if(mainMenu.selectedOption== "Iniciar Partida")
+            if(mainMenu.SelectedOption== "Iniciar Partida")
             {
                 StartPlayerSelectionMenu();
             }
