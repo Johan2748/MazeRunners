@@ -5,6 +5,7 @@ using Spectre.Console;
 
 namespace Maze_Runners
 {
+    // Casilla padre
     class Box
     {
         // Color de la Casilla
@@ -27,19 +28,18 @@ namespace Maze_Runners
             var m_color = color.ToMarkup();
             AnsiConsole.Markup($"[[[on {m_color}]  [/]]] ");
         }
-
-
     }
 
+    // Camino libre en el laberinto
     class EmptyBox : Box
     {
         public override void PrintBox()
         {
             Console.Write("     ");
         }
-
     }
 
+    // Muro
     class Wall : Box
     {
         public Wall()
@@ -48,11 +48,69 @@ namespace Maze_Runners
         }
     }
 
-    class Tramp
+    // Trampas implementadas 
+    class Trap : Box
     {
+        // Tipo de trampa
+        public enum TrapType { Ice, Cage, Portal, Door, SpeedPotion }
+
+        public TrapType Type;
+
+        public Trap(TrapType type)
+        {
+            this.Type = type;
+            SetColor();
+        }
+
+        // EStablece el color caracteristico de la casilla
+        private void SetColor()
+        {
+            if (Type == TrapType.Cage) { color = Color.LightSalmon3; }
+            if (Type == TrapType.Door) { color = Color.Tan; }
+            if (Type == TrapType.Ice) { color = Color.Aqua; }
+            if (Type == TrapType.Portal) { color = Color.Fuchsia; }
+            if (Type == TrapType.SpeedPotion) { color = Color.Yellow1; }
+        }
+
+        public void SetEffect()
+        {
+
+        }
+
 
     }
 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Casilla para la ficha del jugador
     class PlayerBox : Box
     {
         private string id;
@@ -69,27 +127,5 @@ namespace Maze_Runners
             AnsiConsole.Markup($"[[[on {c_color}]{id}[/]]] ");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
