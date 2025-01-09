@@ -26,16 +26,16 @@ namespace Maze_Runners
         {
             // Parsea el color para q el markup lo pueda interpretar
             var m_color = color.ToMarkup();
-            AnsiConsole.Markup($"[[[on {m_color}]  [/]]] ");
+            AnsiConsole.Markup($"[on {m_color}]  [/]");
         }
     }
 
     // Camino libre en el laberinto
     class EmptyBox : Box
     {
-        public override void PrintBox()
-        {            
-            Console.Write("     ");
+        public EmptyBox()
+        {
+            color = Color.Grey0;
         }
     }
 
@@ -48,6 +48,7 @@ namespace Maze_Runners
         }
     }
 
+    // Casilla de victoria
     class WinnerBox : Box
     {
         public WinnerBox()
@@ -55,7 +56,6 @@ namespace Maze_Runners
             this.color = Color.Yellow1; 
         }
     }
-
 
 
     // Casilla para la ficha del jugador
@@ -72,7 +72,7 @@ namespace Maze_Runners
         public override void PrintBox()
         {
             string c_color = color.ToMarkup();
-            AnsiConsole.Markup($"[[[black on {c_color}]{id}[/]]] ");
+            AnsiConsole.Markup($"[black on {c_color}]{id}[/]");
         }
     }
 
@@ -81,7 +81,7 @@ namespace Maze_Runners
     class Trap : Box
     {
         // Tipo de trampa
-        public enum TrapType { Ice, Cage, Portal, Door, SpeedPotion }
+        public enum TrapType { Ice, Portal, SpeedPotion }
 
         public TrapType Type;
 
@@ -94,8 +94,6 @@ namespace Maze_Runners
         // EStablece el color caracteristico de la casilla
         private void SetColor()
         {
-            if (Type == TrapType.Cage) { color = Color.LightSalmon3; }
-            if (Type == TrapType.Door) { color = Color.Tan; }
             if (Type == TrapType.Ice) { color = Color.Aqua; }
             if (Type == TrapType.Portal) { color = Color.Fuchsia; }
             if (Type == TrapType.SpeedPotion) { color = Color.LightGoldenrod1; }

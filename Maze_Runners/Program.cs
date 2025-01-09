@@ -8,21 +8,22 @@ namespace Maze_Runners
         static void Main(string[] args)
         {
             
+            
             // Establece el tamaño de la consola
-            Console.BufferHeight = 100;
+            Console.BufferHeight = 50;
             Console.BufferWidth = 180;
 
 
             // Abre el Menu de Inicio del juego
             GameManager.Start();
-
-            Maze maze = new Maze(27);
-
             
-
             
-        }
+            
 
         
+
+        }
+
+
     }
 }

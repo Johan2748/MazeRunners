@@ -9,13 +9,14 @@ namespace Maze_Runners
     {
         private static List<Player> PlayersList = new List<Player>();
 
-        private Maze maze;
+        private static Maze maze;
 
 
         public static void Start()
         {
             StartMainMenu();
-            Maze m = new Maze(21);
+            GenerateMaze();
+            maze.SetTrapsAndPlayers(PlayersList);
         }
 
         private static void StartMainMenu()
@@ -26,11 +27,11 @@ namespace Maze_Runners
             Menu.PrintLogo();
 
             // Crea el menu e imprime sus opciones
-            Menu mainMenu = new Menu("Opciones", new string[] { "Iniciar Partida", "Como jugar", "Creditos", "Salir" });
+            Menu mainMenu = new Menu("Opciones", new string[] { "Start", "How to play", "Credits", "Exit" });
             mainMenu.SetMenu();
 
             // Abre seccion de creditos
-            if (mainMenu.SelectedOption == "Creditos")
+            if (mainMenu.SelectedOption == "Credits")
             {
                 AnsiConsole.MarkupLine("[blue]  >>[/]  [underline]This game was crated by[/] [underline][green3_1]Johan Daniel :heart_suit:[/][/]" + "\n\n");
 
@@ -41,22 +42,22 @@ namespace Maze_Runners
             }
 
             // Explicacion de la logica del juego
-            if(mainMenu.SelectedOption=="Como jugar")
+            if(mainMenu.SelectedOption=="How to play")
             {
 
             }
 
             // Sale del juego
-            if (mainMenu.SelectedOption == "Salir")
+            if (mainMenu.SelectedOption == "Exit")
             {
-                AnsiConsole.Write(new FigletText("HASTA LA PROXIMA").Color(Color.DeepSkyBlue1));
+                AnsiConsole.Write(new FigletText("SEE YOU SOON").Color(Color.DeepSkyBlue1));
                 Console.ReadKey(true);
                 Console.Beep();
                 Environment.Exit(0);
             }
 
-            // Inicia Menu de jugadores
-            if(mainMenu.SelectedOption== "Iniciar Partida")
+            // Inicia Menu de players
+            if(mainMenu.SelectedOption== "Start")
             {
                 StartPlayerSelectionMenu();
             }
@@ -66,10 +67,10 @@ namespace Maze_Runners
         private static void StartPlayerSelectionMenu()
         {
             // Crea las opciones de cuantos jugadores van a jugar
-            Menu playerSelectionMenu = new Menu("Elija la cantidad de jugadores", new string[] { "2 jugadores", "3 jugadores", "4 jugadores" });
+            Menu playerSelectionMenu = new Menu("Choose the number of players", new string[] { "2 players", "3 players", "4 players" });
             playerSelectionMenu.SetMenu();
 
-            if (playerSelectionMenu.SelectedOption == "2 jugadores") 
+            if (playerSelectionMenu.SelectedOption == "2 players") 
             {
                 Player player1 = GeneratePlayer(1);
                 PlayersList.Add(player1);
@@ -77,7 +78,7 @@ namespace Maze_Runners
                 PlayersList.Add(player2);
             }
 
-            if (playerSelectionMenu.SelectedOption == "3 jugadores") 
+            if (playerSelectionMenu.SelectedOption == "3 players") 
             {
                 Player player1 = GeneratePlayer(1);
                 PlayersList.Add(player1);
@@ -87,7 +88,7 @@ namespace Maze_Runners
                 PlayersList.Add(player3);
             }
 
-            if (playerSelectionMenu.SelectedOption == "4 jugadores") 
+            if (playerSelectionMenu.SelectedOption == "4 players") 
             {
                 Player player1 = GeneratePlayer(1);
                 PlayersList.Add(player1);
@@ -99,7 +100,7 @@ namespace Maze_Runners
                 PlayersList.Add(player4);
             }
 
-            AnsiConsole.Write(new FigletText("VAMOS A JUGAR!!!").Color(Color.Red));
+            AnsiConsole.Write(new FigletText("LET'S PLAY!!!").Color(Color.Red));
 
             Console.ReadKey(true);
             Console.Clear();
@@ -116,16 +117,16 @@ namespace Maze_Runners
             string color_team;
 
             // Definir el color segun el equipo
-            if (n == 1) color_team = "ROJO";
-            else if (n == 2) color_team = "AZUL";
-            else if (n == 3) color_team = "VERDE";
-            else color_team = "BLANCO";
+            if (n == 1) color_team = "RED";
+            else if (n == 2) color_team = "BLUE";
+            else if (n == 3) color_team = "GREEN";
+            else color_team = "WHITE";
 
             // Imprime el color del equipo
-            AnsiConsole.Markup($"[{usercolor_markup}]EQUIPO {color_team}[/]\n\n\n");
+            AnsiConsole.Markup($"[{usercolor_markup}]{color_team} TEAM[/]\n\n\n");
 
             // Pregunta al usuario por el nombre
-            string name = AnsiConsole.Ask<string>($"[{usercolor_markup}]Nombre[/]", $"Jugador {n}");
+            string name = AnsiConsole.Ask<string>($"[{usercolor_markup}]Username[/]", $"Player {n}");
             Console.WriteLine();
 
             // Define con q tipo de ficha va a jugar
@@ -133,8 +134,8 @@ namespace Maze_Runners
 
             pieceType = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title($"[green] Selecciona tu heroe [/]")
-                    .AddChoices(new string[] { "Corredor", "Saltador", "Patinador", "Rompe Muros", "Mago" }
+                    .Title($"[green] Choose your hero[/]")
+                    .AddChoices(new string[] { "Runner", "Jumper", "Skater", "Wall Braker", "Wizard" }
                     )) ;
 
             // Determinacion automatica de los atributos de la ficha
@@ -143,28 +144,28 @@ namespace Maze_Runners
             Power power;
             string id;
 
-            if (pieceType == "Corredor")
+            if (pieceType == "Runner")
             {
                 speed = 6;
                 cooldown = 3;
                 power = Power.Run;
                 id = n + "R";
             }
-            else if (pieceType == "Saltador")
+            else if (pieceType == "Jumper")
             {
                 speed = 4;
                 cooldown = 4;
                 power = Power.Jump;
                 id = n + "J";
             }
-            else if (pieceType == "Patinador")
+            else if (pieceType == "Skater")
             {
                 speed = 5;
                 cooldown = 3;
                 power = Power.Skate;
                 id = n + "S";
             }
-            else if (pieceType == "Rompe Muros")
+            else if (pieceType == "Wall Braker")
             {
                 speed = 5;
                 cooldown = 4;
@@ -176,7 +177,7 @@ namespace Maze_Runners
                 speed = 3;
                 cooldown = 2;
                 power = Power.Teleport;
-                id = n + "T";
+                id = n + "W";
             }
 
             // Crea la ficha del jugador
@@ -191,7 +192,12 @@ namespace Maze_Runners
             return player;
         }
 
-
+        private static void GenerateMaze()
+        {
+            if (PlayersList.Count == 2) maze = new Maze(31);
+            if (PlayersList.Count == 3) maze = new Maze(35);
+            if (PlayersList.Count == 4) maze = new Maze(39);
+        }
 
 
 

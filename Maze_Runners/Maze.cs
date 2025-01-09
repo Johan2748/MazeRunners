@@ -12,6 +12,7 @@ namespace Maze_Runners
 
         private int[,] template;
         private int scale;
+        private bool is_first = true;
 
         private enum Direction { West, North, East, South}
 
@@ -23,6 +24,7 @@ namespace Maze_Runners
             GenerateTemplate();
         }
 
+        // Genera la plantilla del laberinto
         private void GenerateTemplate()
         {
             // Aqui vamos a utilizar una plantilla de enteros donde los 0 son muros y los 1 son caminos libres
@@ -31,10 +33,13 @@ namespace Maze_Runners
             template = new int[scale, scale];
 
             // Genera e imprime el laberinto lleno de bloques y espera a que se presione una tecla para generar los caminos
-            GenerateMaze();
-            PrintMaze();
-            Console.ReadKey();
-            Console.Clear();
+            if (is_first)
+            {
+                GenerateMaze();
+                PrintMaze();
+                Console.ReadKey();
+                is_first = false;
+            }
 
 
             // Pila q almacena las coordenadas de las casillas recorridas
@@ -168,19 +173,104 @@ namespace Maze_Runners
             // Genero la casilla de victoria en el centro del laberinto
             template[scale / 2, scale / 2] = 100;
 
+            // Genera el laberinto con las casillas y lo imprime
             GenerateMaze();
             PrintMaze();
-            Console.ReadKey(true);
-            Console.Clear();
-            GenerateTemplate();
-            
+
+            // Pregunta si va a jugar en ese laberinto o genera uno distinto
+            AnsiConsole.Markup("\n([grey]Press [green]{Space}[/] to generate a different maze or [green]{Enter}[/] to play)[/]");
+
+            ConsoleKeyInfo press = Console.ReadKey(true);
+
+            DoItAgain(press);
         }
 
+        // Vuelve a generar el laberinto
+        private void DoItAgain(ConsoleKeyInfo press)
+        {
+            // Repite el proceso miestras se presione "spacebar"
+            if (press.Key == ConsoleKey.Spacebar)
+            {
+                this.GenerateTemplate();
+            }
+            // No sale del bucle mientras no se presione una tecla distinta
+            else if (press.Key != ConsoleKey.Enter)
+            {
+                press = Console.ReadKey(true);
+                DoItAgain(press);
+            }
+            // Sale del bucle y genera las trampas y los jugadores al presonar "enter"
+            else
+            {
+                
+            }
+        }
 
+        // Genera las trampas
+        private void SetTraps(int n)
+        {
+            int ice;
+            int portal;
+            int speed;
 
+            // Genera una cantidad fija de trampas en dependencia de los jugadores
+            ice = n; portal = n / 2 * 2; speed = n;
+            while (ice > 0 || portal > 0 || speed > 0)
+            {
+                while (ice > 0)
+                {
+                    int x = new Random().Next(scale);
+                    int y = new Random().Next(scale);
+                    if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.Ice); break; }
+                }
+                ice--;
+                while (portal > 0)
+                {
+                    int x = new Random().Next(scale);
+                    int y = new Random().Next(scale);
+                    if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.Portal); break; }
+                }
+                portal--;
+                while (speed > 0)
+                {
+                    int x = new Random().Next(scale);
+                    int y = new Random().Next(scale);
+                    if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.SpeedPotion); break; }
+                }
+                speed--;
+            }
+        }    
 
+        // Genera e imprime en pantalla las trampas y los jugadores
+        public void SetTrapsAndPlayers(List<Player> players)
+        {
+            if (players.Count == 2)
+            {
+                maze[1, 1] = players[0].piece.Box;
+                maze[scale - 2, scale - 2] = players[1].piece.Box;
+                SetTraps(2);
+                PrintMaze();
+            }
+            if (players.Count == 3)
+            {
+                maze[1, 1] = players[0].piece.Box;
+                maze[scale - 2, scale - 2] = players[1].piece.Box;
+                maze[1, scale - 2] = players[2].piece.Box;
+                SetTraps(3);
+                PrintMaze();
+            }
+            if (players.Count == 4)
+            {
+                maze[1, 1] = players[0].piece.Box;
+                maze[scale - 2, scale - 2] = players[1].piece.Box;
+                maze[1, scale - 2] = players[2].piece.Box;
+                maze[scale - 2, 1] = players[3].piece.Box;
+                SetTraps(4);
+                PrintMaze();
+            }
+        }
 
-        // A partir de la plantilla, ggenera las casillas en su correspondiente lugar
+        // A partir de la plantilla, genera las casillas en su correspondiente lugar
         public void GenerateMaze()
         {
             maze = new Box[scale, scale];
@@ -195,12 +285,6 @@ namespace Maze_Runners
 
                     // Numeracion de las casillas especiales
                     if (template[i, j] == 100) maze[i, j] = new WinnerBox();
-
-                    if (template[i, j] == 10) maze[i, j] = new Trap(Trap.TrapType.Cage);
-                    if (template[i, j] == 11) maze[i, j] = new Trap(Trap.TrapType.Door);
-                    if (template[i, j] == 12) maze[i, j] = new Trap(Trap.TrapType.Ice);
-                    if (template[i, j] == 13) maze[i, j] = new Trap(Trap.TrapType.Portal);
-                    if (template[i, j] == 14) maze[i, j] = new Trap(Trap.TrapType.SpeedPotion);
                 }
             }
         }
@@ -208,13 +292,14 @@ namespace Maze_Runners
         // Imprime el laberinto en pantalla
         public void PrintMaze()
         {
+            Console.Clear();
             for(int i = 0; i < maze.GetLength(0); i++)
             {
                 for(int j = 0; j < maze.GetLength(1); j++)
                 {
                     maze[i, j].PrintBox();
                 }
-                Console.WriteLine("\n");
+                Console.WriteLine();
             }
         }
     }
