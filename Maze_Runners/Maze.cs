@@ -37,8 +37,6 @@ namespace Maze_Runners
             Console.Clear();
 
 
-
-
             // Pila q almacena las coordenadas de las casillas recorridas
             Stack<(int, int)> stack = new Stack<(int, int)>();
 
@@ -167,81 +165,16 @@ namespace Maze_Runners
                 }
 
             }
+            // Genero la casilla de victoria en el centro del laberinto
+            template[scale / 2, scale / 2] = 100;
 
             GenerateMaze();
             PrintMaze();
-
+            Console.ReadKey(true);
+            Console.Clear();
+            GenerateTemplate();
+            
         }
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -259,6 +192,15 @@ namespace Maze_Runners
                     // Si la plantilla tiene 0 genera un muro y si tiene un 1 genera un camino
                     if (template[i, j] == 0) maze[i, j] = new Wall();
                     if (template[i, j] == 1) maze[i, j] = new EmptyBox();
+
+                    // Numeracion de las casillas especiales
+                    if (template[i, j] == 100) maze[i, j] = new WinnerBox();
+
+                    if (template[i, j] == 10) maze[i, j] = new Trap(Trap.TrapType.Cage);
+                    if (template[i, j] == 11) maze[i, j] = new Trap(Trap.TrapType.Door);
+                    if (template[i, j] == 12) maze[i, j] = new Trap(Trap.TrapType.Ice);
+                    if (template[i, j] == 13) maze[i, j] = new Trap(Trap.TrapType.Portal);
+                    if (template[i, j] == 14) maze[i, j] = new Trap(Trap.TrapType.SpeedPotion);
                 }
             }
         }

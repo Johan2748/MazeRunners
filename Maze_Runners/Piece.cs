@@ -13,7 +13,7 @@ namespace Maze_Runners
 
         public Power Power;
 
-        public PlayerBox box { get; private set; }
+        public PlayerBox Box { get; private set; }
 
         
 
@@ -22,11 +22,11 @@ namespace Maze_Runners
             Speed = speed;
             Cooldown = cooldown;
             this.Power = power;
-            box = new PlayerBox(id, color);
+            Box = new PlayerBox(id, color);
         }
 
 
 
     }
-    public enum Power { }
+    public enum Power { Break, Jump, Skate, Teleport, Run}
 }

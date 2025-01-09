@@ -16,9 +16,11 @@ namespace Maze_Runners
             // Abre el Menu de Inicio del juego
             GameManager.Start();
 
-            
-           
+            Maze maze = new Maze(27);
 
+            
+
+            
         }
 
         

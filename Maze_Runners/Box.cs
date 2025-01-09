@@ -34,7 +34,7 @@ namespace Maze_Runners
     class EmptyBox : Box
     {
         public override void PrintBox()
-        {
+        {            
             Console.Write("     ");
         }
     }
@@ -47,6 +47,35 @@ namespace Maze_Runners
             this.color = Color.DarkOrange3_1;
         }
     }
+
+    class WinnerBox : Box
+    {
+        public WinnerBox()
+        {
+            this.color = Color.Yellow1; 
+        }
+    }
+
+
+
+    // Casilla para la ficha del jugador
+    class PlayerBox : Box
+    {
+        private string id;
+
+        public PlayerBox(string id, Color color)
+        {
+            this.color = color;
+            this.id = id;
+        }
+
+        public override void PrintBox()
+        {
+            string c_color = color.ToMarkup();
+            AnsiConsole.Markup($"[[[black on {c_color}]{id}[/]]] ");
+        }
+    }
+
 
     // Trampas implementadas 
     class Trap : Box
@@ -69,7 +98,7 @@ namespace Maze_Runners
             if (Type == TrapType.Door) { color = Color.Tan; }
             if (Type == TrapType.Ice) { color = Color.Aqua; }
             if (Type == TrapType.Portal) { color = Color.Fuchsia; }
-            if (Type == TrapType.SpeedPotion) { color = Color.Yellow1; }
+            if (Type == TrapType.SpeedPotion) { color = Color.LightGoldenrod1; }
         }
 
         public void SetEffect()
@@ -110,22 +139,5 @@ namespace Maze_Runners
 
 
 
-    // Casilla para la ficha del jugador
-    class PlayerBox : Box
-    {
-        private string id;
-
-        public PlayerBox(string id, Color color)
-        {
-            this.color = color;
-            this.id = id;
-        }
-
-        public override void PrintBox()
-        {
-            string c_color = color.ToMarkup();
-            AnsiConsole.Markup($"[[[on {c_color}]{id}[/]]] ");
-        }
-    }
-
+    
 }

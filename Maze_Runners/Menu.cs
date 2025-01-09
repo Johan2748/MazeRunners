@@ -32,8 +32,7 @@ namespace Maze_Runners
         {
             SelectedOption = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title($"[green] {title} [/]?")
-                    .PageSize(3)
+                    .Title($"[green] {title} [/]")
                     .AddChoices(options
                     ));
 

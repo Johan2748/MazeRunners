@@ -6,9 +6,15 @@ namespace Maze_Runners
 {
     class Player
     {
-        public bool IsMyTurn;
+        string Username;
 
-        public List<Piece> Pieces;
+        public Piece piece;
+
+        public Player(string username, Piece piece)
+        {
+            Username = username;
+            this.piece = piece;
+        }
 
     }
 }
