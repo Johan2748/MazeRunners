@@ -11,7 +11,7 @@ namespace Maze_Runners
         public Box[,] maze;
 
         private int[,] template;
-        private int scale;
+        public int scale { get; private set; }
         private bool is_first = true;
 
         private enum Direction { West, North, East, South}
@@ -244,28 +244,50 @@ namespace Maze_Runners
         // Genera e imprime en pantalla las trampas y los jugadores
         public void SetTrapsAndPlayers(List<Player> players)
         {
+            // Genera los objetos del laberinto en dependencia de la ctdad de jugadores
             if (players.Count == 2)
             {
+                // Ubica al jugador 1 en el laberinto y actualiza su posicion
                 maze[1, 1] = players[0].piece.Box;
+                players[0].piece.SetOrigin(1, 1);
+                // Ubica al jugador 2 en el laberinto y actualiza su posicion
                 maze[scale - 2, scale - 2] = players[1].piece.Box;
-                SetTraps(2);
+                players[1].piece.SetOrigin(scale - 2, scale - 2);
+
+                SetTraps(3);
                 PrintMaze();
             }
             if (players.Count == 3)
             {
+                // Ubica al jugador 1 en el laberinto y actualiza su posicion
                 maze[1, 1] = players[0].piece.Box;
+                players[0].piece.SetOrigin(1, 1);
+                // Ubica al jugador 2 en el laberinto y actualiza su posicion
                 maze[scale - 2, scale - 2] = players[1].piece.Box;
+                players[1].piece.SetOrigin(scale - 2, scale - 2);
+                // Ubica al jugador 3 en el laberinto y actualiza su posicion
                 maze[1, scale - 2] = players[2].piece.Box;
-                SetTraps(3);
+                players[2].piece.SetOrigin(1, scale - 2);
+
+                SetTraps(5);
                 PrintMaze();
             }
             if (players.Count == 4)
             {
+                // Ubica al jugador 1 en el laberinto y actualiza su posicion
                 maze[1, 1] = players[0].piece.Box;
+                players[0].piece.SetOrigin(1, 1);
+                // Ubica al jugador 2 en el laberinto y actualiza su posicion
                 maze[scale - 2, scale - 2] = players[1].piece.Box;
+                players[1].piece.SetOrigin(scale - 2, scale - 2);
+                // Ubica al jugador 3 en el laberinto y actualiza su posicion
                 maze[1, scale - 2] = players[2].piece.Box;
+                players[2].piece.SetOrigin(1, scale - 2);
+                // Ubica al jugador 4 en el laberinto y actualiza su posicion
                 maze[scale - 2, 1] = players[3].piece.Box;
-                SetTraps(4);
+                players[3].piece.SetOrigin(scale - 2, 1);
+
+                SetTraps(6);
                 PrintMaze();
             }
         }

@@ -11,14 +11,19 @@ namespace Maze_Runners
 
         private static Maze maze;
 
-
+        // Determina el ritmo de toda la aplicacion
         public static void Start()
         {
             StartMainMenu();
             GenerateMaze();
             maze.SetTrapsAndPlayers(PlayersList);
+            KeepPlaying();
+            
+
+            
         }
 
+        // Menu de Inicio
         private static void StartMainMenu()
         {
             Console.Clear();
@@ -64,6 +69,7 @@ namespace Maze_Runners
 
         } // PENDIENTE LA INFORMACION DEL JUEGO
 
+        // Menu de selecion de jugadores
         private static void StartPlayerSelectionMenu()
         {
             // Crea las opciones de cuantos jugadores van a jugar
@@ -106,6 +112,7 @@ namespace Maze_Runners
             Console.Clear();
         }  
 
+        // Menu de generacion de jugador y ficha del jugador
         private static Player GeneratePlayer(int n)
         {
             // Colores de los equipos
@@ -192,6 +199,7 @@ namespace Maze_Runners
             return player;
         }
 
+        // Proporciona un laberinto en correlacion a la ctdad de jugadores
         private static void GenerateMaze()
         {
             if (PlayersList.Count == 2) maze = new Maze(31);
@@ -199,72 +207,18 @@ namespace Maze_Runners
             if (PlayersList.Count == 4) maze = new Maze(39);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // Mantiene el juego mientras no se cumpla la condicion de victoria
+        private static void KeepPlaying()
+        {
+            while (maze.maze[maze.scale / 2, maze.scale / 2].GetType() == typeof(WinnerBox))
+            {
+                foreach (Player player in PlayersList)
+                {
+                    player.piece.Move(maze);
+                    if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox)) break;
+                }
+            }
+        }
 
 
 
