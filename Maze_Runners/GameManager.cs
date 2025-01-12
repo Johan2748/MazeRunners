@@ -7,7 +7,7 @@ namespace Maze_Runners
 {
     class GameManager
     {
-        private static List<Player> PlayersList = new List<Player>();
+        private static List<Player> PlayersList;
 
         private static Maze maze;
 
@@ -75,6 +75,8 @@ namespace Maze_Runners
             // Crea las opciones de cuantos jugadores van a jugar
             Menu playerSelectionMenu = new Menu("Choose the number of players", new string[] { "2 players", "3 players", "4 players" });
             playerSelectionMenu.SetMenu();
+
+            PlayersList = new List<Player>();
 
             if (playerSelectionMenu.SelectedOption == "2 players") 
             {
@@ -220,7 +222,24 @@ namespace Maze_Runners
             }
         }
 
+        // Menu de pausa
+        public static void SetPauseMenu()
+        {
+            Console.Clear();
 
+            Menu pauseMenu = new Menu("Do you want to leave the Game", new string[] { "Back to the Game", "Go to Main Menu" });
+            pauseMenu.SetMenu();
+
+            if(pauseMenu.SelectedOption== "Back to the Game")
+            {
+                maze.PrintMaze();
+            }
+            if(pauseMenu.SelectedOption== "Go to Main Menu")
+            {
+                maze.maze[maze.scale / 2, maze.scale / 2] = new EmptyBox();
+                Start();
+            }
+        }
 
 
 

@@ -7,14 +7,14 @@ namespace Maze_Runners
 {
     class Piece
     {
-        private int x;
-        private int y;
+        public int x;
+        public int y;
 
         private int o_speed;
-        private int speed;
+        public int speed;
 
         private int o_cooldown;
-        private int cooldown;
+        public int cooldown;
 
         private Power power;
 
@@ -48,11 +48,27 @@ namespace Maze_Runners
                 // Lee la tecla presionada
                 ConsoleKeyInfo move = Console.ReadKey(true);
 
-                // Se mueve en la direccion marcada si esta disponible
+                // Se mueve hacia arriba si esta disponible
                 if (move.Key == ConsoleKey.UpArrow)
                 {
-                    if (maze.maze[x - 1, y].GetType() != typeof(Wall))
-                    {
+                    // Chequea q no sea un muro u otro jugador
+                    if (maze.maze[x - 1, y].GetType() != typeof(Wall) && maze.maze[x - 1, y].GetType() != typeof(PlayerBox))
+                    {      
+                        // Chequea si es una trampa y activa el efecto
+                        if (maze.maze[x - 1, y].GetType() == typeof(Trap))
+                        {
+                            Trap trap = new Trap();
+                            trap = maze.maze[x - 1, y] as Trap;
+                            trap.SetEffect(this);
+                            if (trap.Type == Trap.TrapType.Portal)
+                            {
+                                maze.maze[x, y] = new EmptyBox();
+                                trap.Teleport(maze, this, x - 1, y);
+                                continue;
+                            }
+                        }
+
+                        // Actualiza las casillas del laberinto
                         maze.maze[x - 1, y] = Box;
                         maze.maze[x, y] = new EmptyBox();
                         x--;
@@ -60,11 +76,27 @@ namespace Maze_Runners
                         speed--;
                     }
                 }
-                // Se mueve en la direccion marcada si esta disponible
+                // Se mueve hacia la izquierda si esta disponible
                 else if (move.Key == ConsoleKey.LeftArrow)
                 {
-                    if (maze.maze[x, y - 1].GetType() != typeof(Wall))
+                    // Chequea q no sea un muro u otro jugador
+                    if (maze.maze[x, y - 1].GetType() != typeof(Wall) && maze.maze[x, y - 1].GetType() != typeof(PlayerBox)) 
                     {
+                        // Chequea si es una trampa y activa el efecto
+                        if (maze.maze[x, y - 1].GetType() == typeof(Trap))
+                        {
+                            Trap trap = new Trap();
+                            trap = maze.maze[x, y - 1] as Trap;
+                            trap.SetEffect(this);
+                            if (trap.Type == Trap.TrapType.Portal)
+                            {
+                                maze.maze[x, y] = new EmptyBox();
+                                trap.Teleport(maze, this, x, y - 1);
+                                continue;
+                            }
+                        }
+
+                        // Actualiza las casillas del laberinto
                         maze.maze[x, y - 1] = Box;
                         maze.maze[x, y] = new EmptyBox();
                         y--;
@@ -72,11 +104,27 @@ namespace Maze_Runners
                         speed--;
                     }
                 }
-                // Se mueve en la direccion marcada si esta disponible
+                // Se mueve hacia la derecha si esta disponible
                 else if (move.Key == ConsoleKey.RightArrow)
                 {
-                    if (maze.maze[x, y + 1].GetType() != typeof(Wall))
+                    // Chequea q no sea un muro u otro jugador
+                    if (maze.maze[x, y + 1].GetType() != typeof(Wall) && maze.maze[x, y + 1].GetType() != typeof(PlayerBox))
                     {
+                        // Chequea si es una trampa y activa el efecto
+                        if (maze.maze[x, y + 1].GetType() == typeof(Trap))
+                        {
+                            Trap trap = new Trap();
+                            trap = maze.maze[x, y + 1] as Trap;
+                            trap.SetEffect(this);
+                            if (trap.Type == Trap.TrapType.Portal)
+                            {
+                                maze.maze[x, y] = new EmptyBox();
+                                trap.Teleport(maze, this, x, y + 1);
+                                continue;
+                            }
+                        }
+
+                        // Actualiza las casillas del laberinto
                         maze.maze[x, y + 1] = Box;
                         maze.maze[x, y] = new EmptyBox();
                         y++;
@@ -84,11 +132,27 @@ namespace Maze_Runners
                         speed--;
                     }
                 }
-                // Se mueve en la direccion marcada si esta disponible
+                // Se mueve hacia abajo si esta disponible
                 else if (move.Key == ConsoleKey.DownArrow)
                 {
-                    if (maze.maze[x + 1, y].GetType() != typeof(Wall))
+                    // Chequea q no sea un muro u otro jugador
+                    if (maze.maze[x + 1, y].GetType() != typeof(Wall) && maze.maze[x + 1, y].GetType() != typeof(PlayerBox))
                     {
+                        // Chequea si es una trampa y activa el efecto
+                        if (maze.maze[x + 1, y].GetType() == typeof(Trap))
+                        {
+                            Trap trap = new Trap();
+                            trap = maze.maze[x + 1, y] as Trap;
+                            trap.SetEffect(this);
+                            if (trap.Type == Trap.TrapType.Portal)
+                            {
+                                maze.maze[x, y] = new EmptyBox();
+                                trap.Teleport(maze, this, x + 1, y);
+                                continue;
+                            }
+                        }
+                        
+                        // Actualiza las casillas del laberinto
                         maze.maze[x + 1, y] = Box;
                         maze.maze[x, y] = new EmptyBox();
                         x++;
@@ -96,8 +160,12 @@ namespace Maze_Runners
                         speed--;
                     }
                 }
-                // Si asegura q solo se toquen las teclas de movimiento
-                else Move(maze);
+
+                // Opcion para salir del juego
+                else if (move.Key == ConsoleKey.Escape)
+                {
+                    GameManager.SetPauseMenu();
+                }
 
                 // Rompe el ciclo si se cumple la condicion de victoria
                 if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox)) break;
@@ -107,6 +175,50 @@ namespace Maze_Runners
         }
 
 
+        private void ActivatePower()
+        {
+            if (power == Power.Break)
+            {
+                
+            }
+            if (power == Power.Jump)
+            {
+
+            }
+            if (power == Power.Run)
+            {
+
+            }
+            if (power == Power.Skate)
+            {
+
+            }
+            if (power == Power.Teleport)
+            {
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
     }
+
+
+    
+
+
+
+
+
+
+
+
     public enum Power { Break, Jump, Skate, Teleport, Run}
 }

@@ -83,7 +83,9 @@ namespace Maze_Runners
         // Tipo de trampa
         public enum TrapType { Ice, Portal, SpeedPotion }
 
-        public TrapType Type;
+        public TrapType Type { get; private set; }
+
+        public Trap() { }
 
         public Trap(TrapType type)
         {
@@ -91,7 +93,7 @@ namespace Maze_Runners
             SetColor();
         }
 
-        // EStablece el color caracteristico de la casilla
+        // Establece el color caracteristico de la casilla
         private void SetColor()
         {
             if (Type == TrapType.Ice) { color = Color.Aqua; }
@@ -99,11 +101,51 @@ namespace Maze_Runners
             if (Type == TrapType.SpeedPotion) { color = Color.LightGoldenrod1; }
         }
 
-        public void SetEffect()
+        // Acciona el efecto correspondiente a la trampa
+        public void SetEffect(Piece piece)
         {
-
+            // Si la trampa es hielo, termina el turno del jugador
+            if (Type == TrapType.Ice)
+            {
+                piece.speed = 0;
+            }
+            // Si la trampa es velocidad le da mas movimientos a la pieza
+            else if (Type == TrapType.SpeedPotion)
+            {
+                piece.speed += 5;
+            }
         }
 
+        // Efecto especial del Portal
+        public void Teleport(Maze maze, Piece piece, int n, int m)
+        {
+            List<(int, int)> positions = new List<(int, int)>();
+
+            // En la posicion del actual portal pone un camino libre, se asegura q no se incluya a la lista
+            maze.maze[n, m] = new EmptyBox();
+
+            for (int i = 0; i < maze.scale; i++)
+            {
+                for (int j = 0; j < maze.scale; j++)
+                {
+                    if (maze.maze[i, j].color == Color.Fuchsia)
+                    {
+                        // Crea y rellena una lista con las posiciones de los otros portales
+                        positions.Add((i, j));
+                    }
+                }
+            }
+            // Obtiene la posicion de un portal aleatorio
+            int pos = new Random().Next(positions.Count);
+            // Pone en esa posicion del laberinto la ficha
+            maze.maze[positions[pos].Item1, positions[pos].Item2] = piece.Box;
+            // Actualiza las coordenadas de la ficha
+            piece.x = positions[pos].Item1;
+            piece.y = positions[pos].Item2;
+
+            piece.speed--;
+            maze.PrintMaze();
+        }
 
     }
 
