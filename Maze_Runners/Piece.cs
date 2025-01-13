@@ -16,7 +16,7 @@ namespace Maze_Runners
         private int o_cooldown;
         public int cooldown;
 
-        private Power power;
+        public Power power;
 
         public PlayerBox Box { get; private set; }
 
@@ -27,7 +27,7 @@ namespace Maze_Runners
             o_speed = speed;
             this.speed = speed;
             o_cooldown = cooldown;
-            this.cooldown = cooldown;
+            this.cooldown = 0;
             this.power = power;
             Box = new PlayerBox(id, color);
         }
@@ -177,170 +177,181 @@ namespace Maze_Runners
             }
             // Vuelve su capacidad de movimiento a la original
             speed = o_speed;
+
+            if (cooldown > 0) cooldown--;
+
         }
 
         // Activa la habilidad especial de la ficha
         private void ActivatePower(Maze maze)
         {
-            // Rompe un muro
-            if (power == Power.Break)
+            // Solo se activa si se enfrio totalmente la habilidad
+            if(cooldown == 0)
             {
-                ConsoleKeyInfo block = Console.ReadKey(true);
+                // Rompe un muro
+                if (power == Power.Break)
+                {
+                    ConsoleKeyInfo block = Console.ReadKey(true);
 
-                // Rompe el muro superior (si no es un borde)
-                if (block.Key == ConsoleKey.UpArrow)
-                {
-                    if (maze.maze[x - 1, y].GetType() == typeof(Wall) && x - 1 != 0)
+                    // Rompe el muro superior (si no es un borde)
+                    if (block.Key == ConsoleKey.UpArrow)
                     {
-                        maze.maze[x - 1, y] = new EmptyBox();
+                        if (maze.maze[x - 1, y].GetType() == typeof(Wall) && x - 1 != 0)
+                        {
+                            maze.maze[x - 1, y] = new EmptyBox();
+                        }
                     }
-                }
-                // Rompe el muro Izquierdo (si no es un borde)
-                else if (block.Key == ConsoleKey.LeftArrow)
-                {
-                    if (maze.maze[x, y - 1].GetType() == typeof(Wall) && y - 1 != 0)
+                    // Rompe el muro Izquierdo (si no es un borde)
+                    else if (block.Key == ConsoleKey.LeftArrow)
                     {
-                        maze.maze[x, y - 1] = new EmptyBox();
+                        if (maze.maze[x, y - 1].GetType() == typeof(Wall) && y - 1 != 0)
+                        {
+                            maze.maze[x, y - 1] = new EmptyBox();
+                        }
                     }
-                }
-                // Rompe el muro inferior (si no es un borde)
-                else if (block.Key == ConsoleKey.DownArrow)
-                {
-                    if (maze.maze[x + 1, y].GetType() == typeof(Wall) && x + 1 != maze.scale - 1)
+                    // Rompe el muro inferior (si no es un borde)
+                    else if (block.Key == ConsoleKey.DownArrow)
                     {
-                        maze.maze[x + 1, y] = new EmptyBox();
+                        if (maze.maze[x + 1, y].GetType() == typeof(Wall) && x + 1 != maze.scale - 1)
+                        {
+                            maze.maze[x + 1, y] = new EmptyBox();
+                        }
                     }
-                }
-                // Rompe el muro derecho (si no es un borde)
-                else if (block.Key == ConsoleKey.RightArrow)
-                {
-                    if (maze.maze[x, y + 1].GetType() == typeof(Wall) && y + 1 != maze.scale - 1)
+                    // Rompe el muro derecho (si no es un borde)
+                    else if (block.Key == ConsoleKey.RightArrow)
                     {
-                        maze.maze[x, y + 1] = new EmptyBox();
+                        if (maze.maze[x, y + 1].GetType() == typeof(Wall) && y + 1 != maze.scale - 1)
+                        {
+                            maze.maze[x, y + 1] = new EmptyBox();
+                        }
                     }
-                }
-                else ActivatePower(maze);
+                    else ActivatePower(maze);
 
-                maze.PrintMaze();
+                    maze.PrintMaze();
+                }
+                // Salta una casilla
+                if (power == Power.Jump)
+                {
+                    ConsoleKeyInfo block = Console.ReadKey(true);
+
+                    //  Salta la casilla superior (si la siguiente esta vacia)
+                    if (block.Key == ConsoleKey.UpArrow)
+                    {
+                        if (x - 2 > 0 && maze.maze[x - 2, y].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x - 2, y] = Box;
+                            maze.maze[x, y] = new EmptyBox();
+                            x -= 2;
+                        }
+                    }
+                    // Salta la casilla izquierda (si la siguiente esta vacia)
+                    else if (block.Key == ConsoleKey.LeftArrow)
+                    {
+                        if (y - 2 > 0 && maze.maze[x, y - 2].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x, y - 2] = Box;
+                            maze.maze[x, y] = new EmptyBox();
+                            y -= 2;
+                        }
+                    }
+                    // Rompe el muro inferior (si no es un borde)
+                    else if (block.Key == ConsoleKey.DownArrow)
+                    {
+                        if (x + 2 < maze.scale - 1 && maze.maze[x + 2, y].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x + 2, y] = Box;
+                            maze.maze[x, y] = new EmptyBox();
+                            x += 2;
+                        }
+                    }
+                    // Rompe el muro derecho (si no es un borde)
+                    else if (block.Key == ConsoleKey.RightArrow)
+                    {
+                        if (y + 2 < maze.scale - 1 && maze.maze[x, y + 2].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x, y + 2] = Box;
+                            maze.maze[x, y] = new EmptyBox();
+                            y += 2;
+                        }
+                    }
+                    else ActivatePower(maze);
+
+                    maze.PrintMaze();
+                }
+                // Aumenta en 10 las casillas q puede recorrer
+                if (power == Power.Run)
+                {
+                    speed += 10;
+                }
+                // Se mueve hasta q algo la detenga
+                if (power == Power.Skate)
+                {
+                    ConsoleKeyInfo move = Console.ReadKey(true);
+
+                    if (move.Key == ConsoleKey.UpArrow)
+                    {
+                        while (maze.maze[x - 1, y].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x - 1, y] = Box;
+                            maze.maze[x, y] = new EmptyBox();
+                            x--;
+                        }
+                    }
+                    else if (move.Key == ConsoleKey.LeftArrow)
+                    {
+                        while (maze.maze[x, y - 1].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x, y - 1] = Box;
+                            maze.maze[x, y] = new EmptyBox();
+                            y--;
+                        }
+                    }
+                    else if (move.Key == ConsoleKey.DownArrow)
+                    {
+                        while (maze.maze[x + 1, y].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x + 1, y] = Box;
+                            maze.maze[x, y] = new EmptyBox();
+                            x++;
+                        }
+                    }
+                    else if (move.Key == ConsoleKey.RightArrow)
+                    {
+                        while (maze.maze[x, y + 1].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x, y + 1] = Box;
+                            maze.maze[x, y] = new EmptyBox();
+                            y++;
+                        }
+                    }
+                    else ActivatePower(maze);
+
+                    maze.PrintMaze();
+                }
+                // Se teletransporta a un lugar aleatorio del laberinto q este libre
+                if (power == Power.Teleport)
+                {
+                    while (true)
+                    {
+                        int new_x = new Random().Next(maze.scale);
+                        int new_y = new Random().Next(maze.scale);
+
+                        if (maze.maze[new_x, new_y].GetType() == typeof(EmptyBox))
+                        {
+                            maze.maze[x, y] = new EmptyBox();
+                            maze.maze[new_x, new_y] = Box;
+                            x = new_x;
+                            y = new_y;
+                            maze.PrintMaze();
+                            break;
+                        }
+                    }
+                }
+
+                cooldown = o_cooldown + 1;
             }
-            // Salta una casilla
-            if (power == Power.Jump)
-            {
-                ConsoleKeyInfo block = Console.ReadKey(true);
 
-                //  Salta la casilla superior (si la siguiente esta vacia)
-                if (block.Key == ConsoleKey.UpArrow)
-                {
-                    if (x - 2 > 0 && maze.maze[x - 2, y].GetType() == typeof(EmptyBox))
-                    {
-                        maze.maze[x - 2, y] = Box;
-                        maze.maze[x, y] = new EmptyBox();
-                        x -= 2;
-                    }
-                }
-                // Salta la casilla izquierda (si la siguiente esta vacia)
-                else if (block.Key == ConsoleKey.LeftArrow)
-                {
-                    if (y - 2 > 0 && maze.maze[x, y - 2].GetType() == typeof(EmptyBox))
-                    {
-                        maze.maze[x, y - 2] = Box;
-                        maze.maze[x, y] = new EmptyBox();
-                        y -= 2;
-                    }
-                }
-                // Rompe el muro inferior (si no es un borde)
-                else if (block.Key == ConsoleKey.DownArrow)
-                {
-                    if (x + 2 < maze.scale - 1 && maze.maze[x + 2, y].GetType() == typeof(EmptyBox))
-                    {
-                        maze.maze[x + 2, y] = Box;
-                        maze.maze[x, y] = new EmptyBox();
-                        x += 2;
-                    }
-                }
-                // Rompe el muro derecho (si no es un borde)
-                else if (block.Key == ConsoleKey.RightArrow)
-                {
-                    if (y + 2 < maze.scale - 1 && maze.maze[x, y + 2].GetType() == typeof(EmptyBox))
-                    {
-                        maze.maze[x, y + 2] = Box;
-                        maze.maze[x, y] = new EmptyBox();
-                        y += 2;
-                    }
-                }
-                else ActivatePower(maze);
-
-                maze.PrintMaze();
-            }
-            // Aumenta en 10 las casillas q puede recorrer
-            if (power == Power.Run)
-            {
-                speed += 10;
-            }
-            // Se mueve hasta q algo la detenga
-            if (power == Power.Skate)
-            {
-                ConsoleKeyInfo move = Console.ReadKey(true);
-
-                if (move.Key == ConsoleKey.UpArrow)
-                {
-                    while (maze.maze[x - 1, y].GetType() == typeof(EmptyBox)) 
-                    {
-                        maze.maze[x - 1, y] = Box;
-                        maze.maze[x, y] = new EmptyBox();
-                        x--;
-                    }
-                }
-                else if (move.Key == ConsoleKey.LeftArrow)
-                {
-                    while (maze.maze[x, y - 1].GetType() == typeof(EmptyBox))
-                    {
-                        maze.maze[x, y - 1] = Box;
-                        maze.maze[x, y] = new EmptyBox();
-                        y--;
-                    }
-                }
-                else if (move.Key == ConsoleKey.DownArrow)
-                {
-                    while (maze.maze[x + 1, y].GetType() == typeof(EmptyBox))
-                    {
-                        maze.maze[x + 1, y] = Box;
-                        maze.maze[x, y] = new EmptyBox();
-                        x++;
-                    }
-                }
-                else if (move.Key == ConsoleKey.RightArrow)
-                {
-                    while (maze.maze[x, y + 1].GetType() == typeof(EmptyBox))
-                    {
-                        maze.maze[x, y + 1] = Box;
-                        maze.maze[x, y] = new EmptyBox();
-                        y++;
-                    }
-                }
-                else ActivatePower(maze);
-
-                maze.PrintMaze();
-            }
-            // Se teletransporta a un lugar aleatorio del laberinto q este libre
-            if (power == Power.Teleport)
-            {
-                while (true)
-                {
-                    int new_x = new Random().Next(maze.scale);
-                    int new_y = new Random().Next(maze.scale);
-
-                    if (maze.maze[new_x, new_y].GetType() == typeof(EmptyBox))
-                    {
-                        maze.maze[x, y] = new EmptyBox();
-                        maze.maze[new_x, new_y] = Box;
-                        x = new_x;
-                        y = new_y;
-                        maze.PrintMaze();
-                        break;
-                    }
-                }
-            }
+            
 
         }
 

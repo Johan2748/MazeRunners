@@ -212,9 +212,10 @@ namespace Maze_Runners
             int ice;
             int portal;
             int speed;
+            int shape_shifter;
 
             // Genera una cantidad fija de trampas en dependencia de los jugadores
-            ice = n; portal = n / 2 * 2; speed = n;
+            ice = n; portal = n / 2 * 2; speed = n; shape_shifter = n;
             while (ice > 0 || portal > 0 || speed > 0)
             {
                 while (ice > 0)
@@ -238,6 +239,13 @@ namespace Maze_Runners
                     if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.SpeedPotion); break; }
                 }
                 speed--;
+                while (shape_shifter > 0)
+                {
+                    int x = new Random().Next(scale);
+                    int y = new Random().Next(scale);
+                    if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.ShapeShifterPoison); break; }
+                }
+                shape_shifter--;
             }
         }    
 

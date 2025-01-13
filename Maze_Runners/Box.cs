@@ -81,7 +81,7 @@ namespace Maze_Runners
     class Trap : Box
     {
         // Tipo de trampa
-        public enum TrapType { Ice, Portal, SpeedPotion }
+        public enum TrapType { Ice, Portal, SpeedPotion, ShapeShifterPoison }
 
         public TrapType Type { get; private set; }
 
@@ -96,9 +96,10 @@ namespace Maze_Runners
         // Establece el color caracteristico de la casilla
         private void SetColor()
         {
-            if (Type == TrapType.Ice) { color = Color.Aqua; }
-            if (Type == TrapType.Portal) { color = Color.Fuchsia; }
-            if (Type == TrapType.SpeedPotion) { color = Color.LightGoldenrod1; }
+            if (Type == TrapType.Ice) color = Color.Aqua;
+            if (Type == TrapType.Portal) color = Color.Fuchsia;
+            if (Type == TrapType.SpeedPotion) color = Color.LightGoldenrod1;
+            if (Type == TrapType.ShapeShifterPoison) color = Color.HotPink3_1;
         }
 
         // Acciona el efecto correspondiente a la trampa
@@ -113,6 +114,13 @@ namespace Maze_Runners
             else if (Type == TrapType.SpeedPotion)
             {
                 piece.speed += 5;
+            }
+            // Si la trampa es de cambia-formas le cambia el poder por otro al azar
+            else if(Type == TrapType.ShapeShifterPoison)
+            {
+                List<Power> powers = new List<Power>() { Power.Break, Power.Jump, Power.Run, Power.Skate, Power.Teleport };
+                powers.Remove(piece.power);
+                piece.power = powers[new Random().Next(powers.Count)];
             }
         }
 
