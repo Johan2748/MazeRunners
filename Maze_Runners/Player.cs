@@ -6,7 +6,7 @@ namespace Maze_Runners
 {
     class Player
     {
-        string Username;
+        public string Username;
 
         public Piece piece;
 

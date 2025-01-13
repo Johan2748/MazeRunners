@@ -216,7 +216,9 @@ namespace Maze_Runners
             {
                 foreach (Player player in PlayersList)
                 {
+                    ChangePlayer(player);
                     player.piece.Move(maze);
+                    
                     if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox)) break;
                 }
             }
@@ -241,7 +243,16 @@ namespace Maze_Runners
             }
         }
 
+        // Presiona enter para cambiar de jugador
+        private static void ChangePlayer( Player player)
+        {
+            while(Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+            Console.Clear();
+            AnsiConsole.Write(new FigletText(player.Username).Color(Color.DarkMagenta));
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+            maze.PrintMaze();
 
+        }
 
 
 
