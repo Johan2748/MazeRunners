@@ -108,7 +108,7 @@ namespace Maze_Runners
             // Si la trampa es hielo, termina el turno del jugador
             if (Type == TrapType.Ice)
             {
-                piece.speed = 0;
+                piece.speed = 1;
             }
             // Si la trampa es velocidad le da mas movimientos a la pieza
             else if (Type == TrapType.SpeedPotion)

@@ -64,6 +64,7 @@ namespace Maze_Runners
                             {
                                 maze.maze[x, y] = new EmptyBox();
                                 trap.Teleport(maze, this, x - 1, y);
+                                GameManager.PrintInfo(GameManager.PlayersList);
                                 continue;
                             }
                         }
@@ -74,6 +75,7 @@ namespace Maze_Runners
                         x--;
                         maze.PrintMaze();
                         speed--;
+                        GameManager.PrintInfo(GameManager.PlayersList);
                     }
                 }
                 // Se mueve hacia la izquierda si esta disponible
@@ -92,6 +94,7 @@ namespace Maze_Runners
                             {
                                 maze.maze[x, y] = new EmptyBox();
                                 trap.Teleport(maze, this, x, y - 1);
+                                GameManager.PrintInfo(GameManager.PlayersList);
                                 continue;
                             }
                         }
@@ -102,6 +105,7 @@ namespace Maze_Runners
                         y--;
                         maze.PrintMaze();
                         speed--;
+                        GameManager.PrintInfo(GameManager.PlayersList);
                     }
                 }
                 // Se mueve hacia la derecha si esta disponible
@@ -120,6 +124,7 @@ namespace Maze_Runners
                             {
                                 maze.maze[x, y] = new EmptyBox();
                                 trap.Teleport(maze, this, x, y + 1);
+                                GameManager.PrintInfo(GameManager.PlayersList);
                                 continue;
                             }
                         }
@@ -130,6 +135,7 @@ namespace Maze_Runners
                         y++;
                         maze.PrintMaze();
                         speed--;
+                        GameManager.PrintInfo(GameManager.PlayersList);
                     }
                 }
                 // Se mueve hacia abajo si esta disponible
@@ -148,6 +154,7 @@ namespace Maze_Runners
                             {
                                 maze.maze[x, y] = new EmptyBox();
                                 trap.Teleport(maze, this, x + 1, y);
+                                GameManager.PrintInfo(GameManager.PlayersList);
                                 continue;
                             }
                         }
@@ -158,6 +165,7 @@ namespace Maze_Runners
                         x++;
                         maze.PrintMaze();
                         speed--;
+                        GameManager.PrintInfo(GameManager.PlayersList);
                     }
                 }
 
@@ -171,6 +179,8 @@ namespace Maze_Runners
                 {
                     ActivatePower(maze);
                 }
+
+                
 
                 // Rompe el ciclo si se cumple la condicion de victoria
                 if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox)) break;
@@ -282,6 +292,7 @@ namespace Maze_Runners
                 if (power == Power.Run)
                 {
                     speed += 10;
+                    maze.PrintMaze();
                 }
                 // Se mueve hasta q algo la detenga
                 if (power == Power.Skate)
@@ -349,9 +360,8 @@ namespace Maze_Runners
                 }
 
                 cooldown = o_cooldown + 1;
+                GameManager.PrintInfo(GameManager.PlayersList);
             }
-
-            
 
         }
 

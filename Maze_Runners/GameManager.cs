@@ -7,7 +7,7 @@ namespace Maze_Runners
 {
     class GameManager
     {
-        private static List<Player> PlayersList;
+        public static List<Player> PlayersList { get; private set; }
 
         private static Maze maze;
 
@@ -217,8 +217,9 @@ namespace Maze_Runners
                 foreach (Player player in PlayersList)
                 {
                     ChangePlayer(player);
+                    PrintInfo(PlayersList);
                     player.piece.Move(maze);
-                    
+
                     if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox)) break;
                 }
             }
@@ -235,6 +236,7 @@ namespace Maze_Runners
             if(pauseMenu.SelectedOption== "Back to the Game")
             {
                 maze.PrintMaze();
+                PrintInfo(PlayersList);
             }
             if(pauseMenu.SelectedOption== "Go to Main Menu")
             {
@@ -248,12 +250,27 @@ namespace Maze_Runners
         {
             while(Console.ReadKey(true).Key != ConsoleKey.Enter) { }
             Console.Clear();
-            AnsiConsole.Write(new FigletText(player.Username).Color(Color.DarkMagenta));
+            AnsiConsole.Write(new FigletText(player.Username).Color(player.playerColor));
             while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
             maze.PrintMaze();
 
         }
 
+        public static void PrintInfo(List<Player> players)
+        {
+            List<Text> columns = new List<Text>();
+
+            foreach(Player player in players)
+            {
+                columns.Add(player.SetInfo());
+            }
+
+            Columns info = new Columns(columns);
+
+            Console.WriteLine();
+            AnsiConsole.Write(info);
+
+        }
 
 
 
