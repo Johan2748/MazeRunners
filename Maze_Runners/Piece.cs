@@ -49,7 +49,7 @@ namespace Maze_Runners
                 ConsoleKeyInfo move = Console.ReadKey(true);
 
                 // Se mueve hacia arriba si esta disponible
-                if (move.Key == ConsoleKey.UpArrow)
+                if (move.Key == ConsoleKey.UpArrow || move.Key == ConsoleKey.W)
                 {
                     // Chequea q no sea un muro u otro jugador
                     if (maze.maze[x - 1, y].GetType() != typeof(Wall) && maze.maze[x - 1, y].GetType() != typeof(PlayerBox))
@@ -79,7 +79,7 @@ namespace Maze_Runners
                     }
                 }
                 // Se mueve hacia la izquierda si esta disponible
-                else if (move.Key == ConsoleKey.LeftArrow)
+                else if (move.Key == ConsoleKey.LeftArrow || move.Key == ConsoleKey.A) 
                 {
                     // Chequea q no sea un muro u otro jugador
                     if (maze.maze[x, y - 1].GetType() != typeof(Wall) && maze.maze[x, y - 1].GetType() != typeof(PlayerBox))
@@ -109,7 +109,7 @@ namespace Maze_Runners
                     }
                 }
                 // Se mueve hacia la derecha si esta disponible
-                else if (move.Key == ConsoleKey.RightArrow)
+                else if (move.Key == ConsoleKey.RightArrow || move.Key == ConsoleKey.D)
                 {
                     // Chequea q no sea un muro u otro jugador
                     if (maze.maze[x, y + 1].GetType() != typeof(Wall) && maze.maze[x, y + 1].GetType() != typeof(PlayerBox))
@@ -139,7 +139,7 @@ namespace Maze_Runners
                     }
                 }
                 // Se mueve hacia abajo si esta disponible
-                else if (move.Key == ConsoleKey.DownArrow)
+                else if (move.Key == ConsoleKey.DownArrow || move.Key == ConsoleKey.S)
                 {
                     // Chequea q no sea un muro u otro jugador
                     if (maze.maze[x + 1, y].GetType() != typeof(Wall) && maze.maze[x + 1, y].GetType() != typeof(PlayerBox))

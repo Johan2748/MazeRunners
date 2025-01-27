@@ -23,7 +23,7 @@ namespace Maze_Runners
         public Text SetInfo()
         {
             Text info = new Text(
-                Username + "\n\n" +
+                Username + "\n" +
                 "Moves: " + piece.speed + "\n" +
                 "Cooldown: " + piece.cooldown,
                 new Style(playerColor)

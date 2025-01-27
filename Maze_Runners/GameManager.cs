@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Spectre.Console;
+using System.Threading;
 
 namespace Maze_Runners
 {
@@ -11,6 +11,45 @@ namespace Maze_Runners
 
         private static Maze maze;
 
+        // Imprime en la pantalla la historia del juego
+        public static void SetGameStory()
+        {
+            string text = "In the kingdom of Eldoria, a vast territory known for its green meadows and majestic castles, " +
+                "King Alaric reigned. He was a just and wise monarch, loved by his people. \nHowever, there was a shadow " +
+                "that hung over his reign: the inability to have offspring. As time passed, concern grew among the nobles " +
+                "and citizens, as they knew that \nwithout an heir, the future of the kingdom was in danger.";
+
+            string text1 = "Desperate to ensure the continuity of his lineage and the stability of Eldoria, King Alaric " +
+                "decided to organize an unusual tournament. He summoned brave men from across\nthe kingdom to participate " +
+                "in a challenge that would test not only their strength, but also their ingenuity and determination. The " +
+                "tournament would take place in a \nmagical labyrinth, built on the castle grounds.";
+
+            string text2 = "The labyrinth was full of traps and illusions. It was said that only those with a pure heart " +
+                "and a cunning mind could find the way out. The first participant to reach \nthe center of the labyrinth would " +
+                "receive the decoration of prince or princess and would become the successor to the throne.";
+
+            List<string> list = new List<string>() { text, text1, text2 };
+
+            AnsiConsole.Status()
+            .Spinner(Spinner.Known.Line)
+            .Start("Loading...", ctx => {
+                Thread.Sleep(5000);
+            });
+
+            foreach (string s in list)
+            {
+                foreach (char c in s)
+                {
+                    AnsiConsole.Markup($"[darkmagenta_1]{c}[/]");
+                    Thread.Sleep(10);
+                }
+                Console.WriteLine("\n");
+            }
+
+            Console.ReadKey(true);
+
+        }
+
         // Determina el ritmo de toda la aplicacion
         public static void Start()
         {
@@ -18,9 +57,7 @@ namespace Maze_Runners
             GenerateMaze();
             maze.SetTrapsAndPlayers(PlayersList);
             KeepPlaying();
-            
-
-            
+            Start();
         }
 
         // Menu de Inicio
@@ -49,7 +86,7 @@ namespace Maze_Runners
             // Explicacion de la logica del juego
             if(mainMenu.SelectedOption=="How to play")
             {
-
+                HowToPlayInfo();
             }
 
             // Sale del juego
@@ -67,7 +104,108 @@ namespace Maze_Runners
                 StartPlayerSelectionMenu();
             }
 
-        } // PENDIENTE LA INFORMACION DEL JUEGO
+        }
+
+        // Escribe el texto con la informacion de como jugar
+        private static void HowToPlayInfo()
+        {
+            string textColor = "mediumorchid3";
+            AnsiConsole.Markup($"[{textColor}]" +
+                "In this interesting multiplayer adventure your objective is to fight to reach the center of the maze first.\n\n" +
+                "[/]");
+
+            WinnerBox winnerBox = new WinnerBox();
+            winnerBox.PrintBox();
+
+            AnsiConsole.Markup($"[{winnerBox.color.ToMarkup()}] Goal[/]\n\n");
+
+            AnsiConsole.Markup($"[{textColor}]" +
+                "To do this you will have to choose a hero who will lead you to victory.\n" +
+                "Each hero has a special skill that will help him reach the goal:\n\n\n " +
+                "[/]");
+
+            PlayerBox runner = new PlayerBox("#R", Color.Red);
+            PlayerBox jumper = new PlayerBox("#J", Color.Blue);
+            PlayerBox skater = new PlayerBox("#S", Color.Lime);
+            PlayerBox wallBraker = new PlayerBox("#B", Color.Blue);
+            PlayerBox wizard = new PlayerBox("#W", Color.Red);
+
+            runner.PrintBox();
+            AnsiConsole.Markup($"[{runner.color.ToMarkup()}] Runner[/]" +
+                $"[{textColor}]   Speed:[/] 6 steps\n" +
+                $"[{textColor}]             Cooldown:[/] 3 turns\n" +
+                $"[{textColor}]             Skill:[/] You con walk 10 extra steps\n\n ");
+
+            jumper.PrintBox();
+            AnsiConsole.Markup($"[{jumper.color.ToMarkup()}] Jumper[/]" +
+                $"[{textColor}]   Speed:[/] 4 steps\n" +
+                $"[{textColor}]             Cooldown:[/] 4 turns\n" +
+                $"[{textColor}]             Skill:[/] You can jump over an intermediate square\n\n ");
+
+            skater.PrintBox();
+            AnsiConsole.Markup($"[{skater.color.ToMarkup()}] Skater[/]" +
+                $"[{textColor}]   Speed:[/] 5 steps\n" +
+                $"[{textColor}]             Cooldown:[/] 3 turns\n" +
+                $"[{textColor}]             Skill:[/] You can skate in one direction until you find an obstacle\n\n ");
+
+            wallBraker.PrintBox();
+            AnsiConsole.Markup($"[{wallBraker.color.ToMarkup()}] Wall Braker[/]" +
+                $"[{textColor}]   Speed:[/] 5 steps\n" +
+                $"[{textColor}]                  Cooldown:[/] 4 turns\n" +
+                $"[{textColor}]                  Skill:[/] You can break a wall\n\n ");
+
+            wizard.PrintBox();
+            AnsiConsole.Markup($"[{wizard.color.ToMarkup()}] Wizard[/]" +
+                $"[{textColor}]   Speed:[/] 3 steps\n" +
+                $"[{textColor}]             Cooldown:[/] 2 turns\n" +
+                $"[{textColor}]             Skill:[/] Teleport to a random location in the maze\n\n");
+
+
+            AnsiConsole.Markup($"[{textColor}]The labyrinth has several traps that will make your passage more difficult.\n\n [/]");
+
+            Trap ice = new Trap(Trap.TrapType.Ice);
+            Trap portal = new Trap(Trap.TrapType.Portal);
+            Trap shifter = new Trap(Trap.TrapType.ShapeShifterPoison);
+            Trap speed = new Trap(Trap.TrapType.SpeedPotion);
+
+            ice.PrintBox();
+            AnsiConsole.Markup($"[{textColor}] Ice[/]" +
+                $"   End your turn\n\n ");
+
+            portal.PrintBox();
+            AnsiConsole.Markup($"[{textColor}] Portal[/]" +
+                $"   Teleports you to another portal\n\n ");
+
+            shifter.PrintBox();
+            AnsiConsole.Markup($"[{textColor}] Shape Shifter Poison[/]" +
+                $"   Change your skill to a random one\n\n ");
+
+            speed.PrintBox();
+            AnsiConsole.Markup($"[{textColor}] Speed Poison[/]" +
+                $"   Gives you 5 extra steps");
+
+
+            Console.WriteLine("\n\n\n");
+            AnsiConsole.Markup("[grey37]    (Press any key to return to go next)...   [/]");
+            Console.ReadKey(true);
+            Console.Clear();
+
+            AnsiConsole.Markup($"[{textColor}]Controls:[/]\n\n");
+
+            AnsiConsole.Markup($"[{textColor}]Move up:[/] W / UpArrow\n\n");
+            AnsiConsole.Markup($"[{textColor}]Move left:[/] A / LeftArrow\n\n");
+            AnsiConsole.Markup($"[{textColor}]Move down:[/] S / DownArrow\n\n");
+            AnsiConsole.Markup($"[{textColor}]Move right:[/] D / RightArrow\n\n");
+            AnsiConsole.Markup($"[{textColor}]Activate power:[/] P\n\n");
+            AnsiConsole.Markup($"[{textColor}]Swicht player:[/] Enter\n\n");
+            AnsiConsole.Markup($"[{textColor}]Menu Pause:[/] Esc\n\n");
+
+            Console.WriteLine("\n\n\n");
+            AnsiConsole.Markup("[grey37]    (Press any key to return to the Main Menu)...   [/]");
+
+            Console.ReadKey(true);
+            StartMainMenu();
+        }
 
         // Menu de selecion de jugadores
         private static void StartPlayerSelectionMenu()
@@ -220,7 +358,11 @@ namespace Maze_Runners
                     PrintInfo(PlayersList);
                     player.piece.Move(maze);
 
-                    if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox)) break;
+                    if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox))
+                    {
+                        SetWinner(player);
+                        break;
+                    }
                 }
             }
         }
@@ -248,7 +390,12 @@ namespace Maze_Runners
         // Presiona enter para cambiar de jugador
         private static void ChangePlayer( Player player)
         {
-            while(Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+            ConsoleKeyInfo press = Console.ReadKey(true);
+            while (press.Key != ConsoleKey.Enter)
+            {
+                if (press.Key == ConsoleKey.Escape) SetPauseMenu();
+                press = Console.ReadKey(true);
+            }
             Console.Clear();
             AnsiConsole.Write(new FigletText(player.Username).Color(player.playerColor));
             while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
@@ -256,6 +403,7 @@ namespace Maze_Runners
 
         }
 
+        // Imprine la informacion de los jugadores
         public static void PrintInfo(List<Player> players)
         {
             List<Text> columns = new List<Text>();
@@ -272,7 +420,15 @@ namespace Maze_Runners
 
         }
 
-
+        // Imprime el nombre del ganador y termina el juego
+        public static void SetWinner(Player player)
+        {
+            Console.Clear();
+            AnsiConsole.Write(new FigletText(player.Username).Color(player.playerColor).Centered());
+            Console.WriteLine();
+            AnsiConsole.Write(new FigletText("IS THE WINNER").Color(player.playerColor).Centered());
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+        }
 
     }
 }

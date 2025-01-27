@@ -13,6 +13,8 @@ namespace Maze_Runners
             Console.BufferHeight = 50;
             Console.BufferWidth = 180;
 
+            // Imprime la Historia del juego cuando se abre la aplicacion
+            //GameManager.SetGameStory();
 
             // Abre el Menu de Inicio del juego
             GameManager.Start();
