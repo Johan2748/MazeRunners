@@ -6,20 +6,10 @@ using Spectre.Console;
 namespace Maze_Runners
 {
     // Casilla padre
-    class Box
+    abstract class Box
     {
         // Color de la Casilla
         public Color color;
-
-        public Box()
-        {
-            color = Color.Black;
-        }
-
-        public Box(Color color)
-        {
-            this.color = color;
-        }
 
         // Imprime la Casilla en Pantalla
         public virtual void PrintBox()
@@ -156,36 +146,6 @@ namespace Maze_Runners
         }
 
     }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     
 }

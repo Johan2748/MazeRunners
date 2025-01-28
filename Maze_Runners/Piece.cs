@@ -365,7 +365,6 @@ namespace Maze_Runners
 
         }
 
-
     }
     
     public enum Power { Break, Jump, Skate, Teleport, Run}

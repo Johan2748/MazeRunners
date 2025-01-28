@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Maze_Runners
 {
-    class GameManager
+    static class GameManager
     {
         public static List<Player> PlayersList { get; private set; }
 
@@ -33,21 +33,26 @@ namespace Maze_Runners
             AnsiConsole.Status()
             .Spinner(Spinner.Known.Line)
             .Start("Loading...", ctx => {
-                Thread.Sleep(5000);
+                Thread.Sleep(3000);
             });
-
+            
             foreach (string s in list)
             {
                 foreach (char c in s)
                 {
                     AnsiConsole.Markup($"[darkmagenta_1]{c}[/]");
-                    Thread.Sleep(10);
+                    Thread.Sleep(1);
                 }
                 Console.WriteLine("\n");
             }
 
-            Console.ReadKey(true);
+            AnsiConsole.Write(new FigletText("WELCOME").Color(Color.DarkMagenta_1));
+            Thread.Sleep(20);
+            AnsiConsole.Write(new FigletText("MAZE").Color(Color.DarkMagenta_1).Centered());
+            Thread.Sleep(20);
+            AnsiConsole.Write(new FigletText("RUNNERS").Color(Color.DarkMagenta_1).RightJustified());
 
+            Console.ReadKey(true);            
         }
 
         // Determina el ritmo de toda la aplicacion
@@ -186,7 +191,7 @@ namespace Maze_Runners
 
 
             Console.WriteLine("\n\n\n");
-            AnsiConsole.Markup("[grey37]    (Press any key to return to go next)...   [/]");
+            AnsiConsole.Markup("[grey37]    (Press any key to go next)...   [/]");
             Console.ReadKey(true);
             Console.Clear();
 

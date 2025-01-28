@@ -38,10 +38,5 @@ namespace Maze_Runners
 
             Console.Clear();
         }
-
-
-
-
-        
     }
 }
