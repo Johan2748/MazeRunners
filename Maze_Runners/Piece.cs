@@ -204,7 +204,7 @@ namespace Maze_Runners
                     ConsoleKeyInfo block = Console.ReadKey(true);
 
                     // Rompe el muro superior (si no es un borde)
-                    if (block.Key == ConsoleKey.UpArrow)
+                    if (block.Key == ConsoleKey.UpArrow || block.Key == ConsoleKey.W)
                     {
                         if (maze.maze[x - 1, y].GetType() == typeof(Wall) && x - 1 != 0)
                         {
@@ -212,7 +212,7 @@ namespace Maze_Runners
                         }
                     }
                     // Rompe el muro Izquierdo (si no es un borde)
-                    else if (block.Key == ConsoleKey.LeftArrow)
+                    else if (block.Key == ConsoleKey.LeftArrow || block.Key == ConsoleKey.A)
                     {
                         if (maze.maze[x, y - 1].GetType() == typeof(Wall) && y - 1 != 0)
                         {
@@ -220,7 +220,7 @@ namespace Maze_Runners
                         }
                     }
                     // Rompe el muro inferior (si no es un borde)
-                    else if (block.Key == ConsoleKey.DownArrow)
+                    else if (block.Key == ConsoleKey.DownArrow || block.Key == ConsoleKey.S)
                     {
                         if (maze.maze[x + 1, y].GetType() == typeof(Wall) && x + 1 != maze.scale - 1)
                         {
@@ -228,7 +228,7 @@ namespace Maze_Runners
                         }
                     }
                     // Rompe el muro derecho (si no es un borde)
-                    else if (block.Key == ConsoleKey.RightArrow)
+                    else if (block.Key == ConsoleKey.RightArrow || block.Key == ConsoleKey.D) 
                     {
                         if (maze.maze[x, y + 1].GetType() == typeof(Wall) && y + 1 != maze.scale - 1)
                         {
@@ -245,7 +245,7 @@ namespace Maze_Runners
                     ConsoleKeyInfo block = Console.ReadKey(true);
 
                     //  Salta la casilla superior (si la siguiente esta vacia)
-                    if (block.Key == ConsoleKey.UpArrow)
+                    if (block.Key == ConsoleKey.UpArrow || block.Key == ConsoleKey.W)
                     {
                         if (x - 2 > 0 && maze.maze[x - 2, y].GetType() == typeof(EmptyBox))
                         {
@@ -255,7 +255,7 @@ namespace Maze_Runners
                         }
                     }
                     // Salta la casilla izquierda (si la siguiente esta vacia)
-                    else if (block.Key == ConsoleKey.LeftArrow)
+                    else if (block.Key == ConsoleKey.LeftArrow || block.Key == ConsoleKey.A)
                     {
                         if (y - 2 > 0 && maze.maze[x, y - 2].GetType() == typeof(EmptyBox))
                         {
@@ -265,7 +265,7 @@ namespace Maze_Runners
                         }
                     }
                     // Rompe el muro inferior (si no es un borde)
-                    else if (block.Key == ConsoleKey.DownArrow)
+                    else if (block.Key == ConsoleKey.DownArrow || block.Key == ConsoleKey.S)
                     {
                         if (x + 2 < maze.scale - 1 && maze.maze[x + 2, y].GetType() == typeof(EmptyBox))
                         {
@@ -275,7 +275,7 @@ namespace Maze_Runners
                         }
                     }
                     // Rompe el muro derecho (si no es un borde)
-                    else if (block.Key == ConsoleKey.RightArrow)
+                    else if (block.Key == ConsoleKey.RightArrow || block.Key == ConsoleKey.D)
                     {
                         if (y + 2 < maze.scale - 1 && maze.maze[x, y + 2].GetType() == typeof(EmptyBox))
                         {
@@ -299,7 +299,7 @@ namespace Maze_Runners
                 {
                     ConsoleKeyInfo move = Console.ReadKey(true);
 
-                    if (move.Key == ConsoleKey.UpArrow)
+                    if (move.Key == ConsoleKey.UpArrow || move.Key == ConsoleKey.W)
                     {
                         while (maze.maze[x - 1, y].GetType() == typeof(EmptyBox))
                         {
@@ -308,7 +308,7 @@ namespace Maze_Runners
                             x--;
                         }
                     }
-                    else if (move.Key == ConsoleKey.LeftArrow)
+                    else if (move.Key == ConsoleKey.LeftArrow || move.Key == ConsoleKey.A)
                     {
                         while (maze.maze[x, y - 1].GetType() == typeof(EmptyBox))
                         {
@@ -317,7 +317,7 @@ namespace Maze_Runners
                             y--;
                         }
                     }
-                    else if (move.Key == ConsoleKey.DownArrow)
+                    else if (move.Key == ConsoleKey.DownArrow || move.Key == ConsoleKey.S)
                     {
                         while (maze.maze[x + 1, y].GetType() == typeof(EmptyBox))
                         {
@@ -326,7 +326,7 @@ namespace Maze_Runners
                             x++;
                         }
                     }
-                    else if (move.Key == ConsoleKey.RightArrow)
+                    else if (move.Key == ConsoleKey.RightArrow || move.Key == ConsoleKey.D)
                     {
                         while (maze.maze[x, y + 1].GetType() == typeof(EmptyBox))
                         {
