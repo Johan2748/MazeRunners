@@ -278,7 +278,17 @@ namespace Maze_Runners
             AnsiConsole.Markup($"[{usercolor_markup}]{color_team} TEAM[/]\n\n\n");
 
             // Pregunta al usuario por el nombre
-            string name = AnsiConsole.Ask<string>($"[{usercolor_markup}]Username[/]", $"Player {n}");
+            string name = AnsiConsole.Prompt(new TextPrompt<string>($"[{usercolor_markup}]Username[/]")
+                .DefaultValue($"Player {n}")
+                .Validate(username =>
+                {
+                    if (username.Length > 20)
+                    {
+                        return ValidationResult.Error("[red] Too long!!![/]");
+                    }
+                    else return ValidationResult.Success();
+                }
+                ));
             Console.WriteLine();
 
             // Define con q tipo de ficha va a jugar
