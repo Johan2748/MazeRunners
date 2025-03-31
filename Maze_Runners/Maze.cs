@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Spectre.Console;
@@ -103,6 +103,8 @@ namespace Maze_Runners
                                     // Agrego la casilla actual a la pila y la marco para salir del bucle
                                     stack.Push((current.x, current.y - 2));
                                     break_loop = true;
+                                    //GenerateMaze();
+                                    //PrintMaze();
                                 }
                             }
                             break;
@@ -121,6 +123,8 @@ namespace Maze_Runners
                                     // Agrego la casilla actual a la pila y la marco para salir del bucle
                                     stack.Push((current.x - 2, current.y));
                                     break_loop = true;
+                                    //GenerateMaze();
+                                    //PrintMaze();
                                 }
                             }
                             break;
@@ -139,6 +143,8 @@ namespace Maze_Runners
                                     // Agrego la casilla actual a la pila y la marco para salir del bucle
                                     stack.Push((current.x, current.y + 2));
                                     break_loop = true;
+                                    //GenerateMaze();
+                                    //PrintMaze();
                                 }
                             }
                             break;
@@ -157,6 +163,8 @@ namespace Maze_Runners
                                     // Agrego la casilla actual a la pila y la marco para salir del bucle
                                     stack.Push((current.x + 2, current.y));
                                     break_loop = true;
+                                    //GenerateMaze();
+                                    //PrintMaze();
                                 }
                             }
                             break;
@@ -222,28 +230,28 @@ namespace Maze_Runners
                 {
                     int x = new Random().Next(scale);
                     int y = new Random().Next(scale);
-                    if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.Ice); break; }
+                    if (maze[x, y] is EmptyBox) { maze[x, y] = new Trap(Trap.TrapType.Ice); break; }
                 }
                 ice--;
                 while (portal > 0)
                 {
                     int x = new Random().Next(scale);
                     int y = new Random().Next(scale);
-                    if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.Portal); break; }
+                    if (maze[x, y] is EmptyBox) { maze[x, y] = new Trap(Trap.TrapType.Portal); break; }
                 }
                 portal--;
                 while (speed > 0)
                 {
                     int x = new Random().Next(scale);
                     int y = new Random().Next(scale);
-                    if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.SpeedPotion); break; }
+                    if (maze[x, y] is EmptyBox) { maze[x, y] = new Trap(Trap.TrapType.SpeedPotion); break; }
                 }
                 speed--;
                 while (shape_shifter > 0)
                 {
                     int x = new Random().Next(scale);
                     int y = new Random().Next(scale);
-                    if (maze[x, y].GetType() == typeof(EmptyBox)) { maze[x, y] = new Trap(Trap.TrapType.ShapeShifterPoison); break; }
+                    if (maze[x, y] is EmptyBox) { maze[x, y] = new Trap(Trap.TrapType.ShapeShifterPoison); break; }
                 }
                 shape_shifter--;
             }

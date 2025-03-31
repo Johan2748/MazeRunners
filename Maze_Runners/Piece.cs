@@ -52,10 +52,10 @@ namespace Maze_Runners
                 if (move.Key == ConsoleKey.UpArrow || move.Key == ConsoleKey.W)
                 {
                     // Chequea q no sea un muro u otro jugador
-                    if (maze.maze[x - 1, y].GetType() != typeof(Wall) && maze.maze[x - 1, y].GetType() != typeof(PlayerBox))
+                    if (maze.maze[x - 1, y] is not Wall && maze.maze[x - 1, y] is not PlayerBox)
                     {
                         // Chequea si es una trampa y activa el efecto
-                        if (maze.maze[x - 1, y].GetType() == typeof(Trap))
+                        if (maze.maze[x - 1, y] is Trap)
                         {
                             Trap trap = new Trap();
                             trap = maze.maze[x - 1, y] as Trap;
@@ -82,10 +82,10 @@ namespace Maze_Runners
                 else if (move.Key == ConsoleKey.LeftArrow || move.Key == ConsoleKey.A) 
                 {
                     // Chequea q no sea un muro u otro jugador
-                    if (maze.maze[x, y - 1].GetType() != typeof(Wall) && maze.maze[x, y - 1].GetType() != typeof(PlayerBox))
+                    if (maze.maze[x, y - 1] is not Wall && maze.maze[x, y - 1] is not PlayerBox)
                     {
                         // Chequea si es una trampa y activa el efecto
-                        if (maze.maze[x, y - 1].GetType() == typeof(Trap))
+                        if (maze.maze[x, y - 1] is Trap)
                         {
                             Trap trap = new Trap();
                             trap = maze.maze[x, y - 1] as Trap;
@@ -112,10 +112,10 @@ namespace Maze_Runners
                 else if (move.Key == ConsoleKey.RightArrow || move.Key == ConsoleKey.D)
                 {
                     // Chequea q no sea un muro u otro jugador
-                    if (maze.maze[x, y + 1].GetType() != typeof(Wall) && maze.maze[x, y + 1].GetType() != typeof(PlayerBox))
+                    if (maze.maze[x, y + 1] is not Wall && maze.maze[x, y + 1] is not PlayerBox)
                     {
                         // Chequea si es una trampa y activa el efecto
-                        if (maze.maze[x, y + 1].GetType() == typeof(Trap))
+                        if (maze.maze[x, y + 1] is Trap)
                         {
                             Trap trap = new Trap();
                             trap = maze.maze[x, y + 1] as Trap;
@@ -142,10 +142,10 @@ namespace Maze_Runners
                 else if (move.Key == ConsoleKey.DownArrow || move.Key == ConsoleKey.S)
                 {
                     // Chequea q no sea un muro u otro jugador
-                    if (maze.maze[x + 1, y].GetType() != typeof(Wall) && maze.maze[x + 1, y].GetType() != typeof(PlayerBox))
+                    if (maze.maze[x + 1, y] is not Wall && maze.maze[x + 1, y] is not PlayerBox)
                     {
                         // Chequea si es una trampa y activa el efecto
-                        if (maze.maze[x + 1, y].GetType() == typeof(Trap))
+                        if (maze.maze[x + 1, y] is Trap)
                         {
                             Trap trap = new Trap();
                             trap = maze.maze[x + 1, y] as Trap;
@@ -180,10 +180,15 @@ namespace Maze_Runners
                     ActivatePower(maze);
                 }
 
-                
+                else if (move.Key == ConsoleKey.O)
+                {
+                    speed = 0;
+                    maze.PrintMaze();
+                    GameManager.PrintInfo(GameManager.PlayersList);
+                }
 
                 // Rompe el ciclo si se cumple la condicion de victoria
-                if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox)) break;
+                if (maze.maze[maze.scale / 2, maze.scale / 2] is not WinnerBox) break;
             }
             // Vuelve su capacidad de movimiento a la original
             speed = o_speed;
@@ -206,7 +211,7 @@ namespace Maze_Runners
                     // Rompe el muro superior (si no es un borde)
                     if (block.Key == ConsoleKey.UpArrow || block.Key == ConsoleKey.W)
                     {
-                        if (maze.maze[x - 1, y].GetType() == typeof(Wall) && x - 1 != 0)
+                        if (maze.maze[x - 1, y] is Wall && x - 1 != 0)
                         {
                             maze.maze[x - 1, y] = new EmptyBox();
                         }
@@ -214,7 +219,7 @@ namespace Maze_Runners
                     // Rompe el muro Izquierdo (si no es un borde)
                     else if (block.Key == ConsoleKey.LeftArrow || block.Key == ConsoleKey.A)
                     {
-                        if (maze.maze[x, y - 1].GetType() == typeof(Wall) && y - 1 != 0)
+                        if (maze.maze[x, y - 1] is Wall && y - 1 != 0)
                         {
                             maze.maze[x, y - 1] = new EmptyBox();
                         }
@@ -222,7 +227,7 @@ namespace Maze_Runners
                     // Rompe el muro inferior (si no es un borde)
                     else if (block.Key == ConsoleKey.DownArrow || block.Key == ConsoleKey.S)
                     {
-                        if (maze.maze[x + 1, y].GetType() == typeof(Wall) && x + 1 != maze.scale - 1)
+                        if (maze.maze[x + 1, y] is Wall && x + 1 != maze.scale - 1)
                         {
                             maze.maze[x + 1, y] = new EmptyBox();
                         }
@@ -230,7 +235,7 @@ namespace Maze_Runners
                     // Rompe el muro derecho (si no es un borde)
                     else if (block.Key == ConsoleKey.RightArrow || block.Key == ConsoleKey.D) 
                     {
-                        if (maze.maze[x, y + 1].GetType() == typeof(Wall) && y + 1 != maze.scale - 1)
+                        if (maze.maze[x, y + 1] is Wall && y + 1 != maze.scale - 1)
                         {
                             maze.maze[x, y + 1] = new EmptyBox();
                         }
@@ -247,7 +252,7 @@ namespace Maze_Runners
                     //  Salta la casilla superior (si la siguiente esta vacia)
                     if (block.Key == ConsoleKey.UpArrow || block.Key == ConsoleKey.W)
                     {
-                        if (x - 2 > 0 && maze.maze[x - 2, y].GetType() == typeof(EmptyBox))
+                        if (x - 2 > 0 && maze.maze[x - 2, y] is EmptyBox)
                         {
                             maze.maze[x - 2, y] = Box;
                             maze.maze[x, y] = new EmptyBox();
@@ -257,7 +262,7 @@ namespace Maze_Runners
                     // Salta la casilla izquierda (si la siguiente esta vacia)
                     else if (block.Key == ConsoleKey.LeftArrow || block.Key == ConsoleKey.A)
                     {
-                        if (y - 2 > 0 && maze.maze[x, y - 2].GetType() == typeof(EmptyBox))
+                        if (y - 2 > 0 && maze.maze[x, y - 2] is EmptyBox)
                         {
                             maze.maze[x, y - 2] = Box;
                             maze.maze[x, y] = new EmptyBox();
@@ -267,7 +272,7 @@ namespace Maze_Runners
                     // Rompe el muro inferior (si no es un borde)
                     else if (block.Key == ConsoleKey.DownArrow || block.Key == ConsoleKey.S)
                     {
-                        if (x + 2 < maze.scale - 1 && maze.maze[x + 2, y].GetType() == typeof(EmptyBox))
+                        if (x + 2 < maze.scale - 1 && maze.maze[x + 2, y] is EmptyBox)
                         {
                             maze.maze[x + 2, y] = Box;
                             maze.maze[x, y] = new EmptyBox();
@@ -277,7 +282,7 @@ namespace Maze_Runners
                     // Rompe el muro derecho (si no es un borde)
                     else if (block.Key == ConsoleKey.RightArrow || block.Key == ConsoleKey.D)
                     {
-                        if (y + 2 < maze.scale - 1 && maze.maze[x, y + 2].GetType() == typeof(EmptyBox))
+                        if (y + 2 < maze.scale - 1 && maze.maze[x, y + 2] is EmptyBox)
                         {
                             maze.maze[x, y + 2] = Box;
                             maze.maze[x, y] = new EmptyBox();
@@ -301,7 +306,7 @@ namespace Maze_Runners
 
                     if (move.Key == ConsoleKey.UpArrow || move.Key == ConsoleKey.W)
                     {
-                        while (maze.maze[x - 1, y].GetType() == typeof(EmptyBox))
+                        while (maze.maze[x - 1, y] is EmptyBox)
                         {
                             maze.maze[x - 1, y] = Box;
                             maze.maze[x, y] = new EmptyBox();
@@ -310,7 +315,7 @@ namespace Maze_Runners
                     }
                     else if (move.Key == ConsoleKey.LeftArrow || move.Key == ConsoleKey.A)
                     {
-                        while (maze.maze[x, y - 1].GetType() == typeof(EmptyBox))
+                        while (maze.maze[x, y - 1] is EmptyBox)
                         {
                             maze.maze[x, y - 1] = Box;
                             maze.maze[x, y] = new EmptyBox();
@@ -319,7 +324,7 @@ namespace Maze_Runners
                     }
                     else if (move.Key == ConsoleKey.DownArrow || move.Key == ConsoleKey.S)
                     {
-                        while (maze.maze[x + 1, y].GetType() == typeof(EmptyBox))
+                        while (maze.maze[x + 1, y] is EmptyBox)
                         {
                             maze.maze[x + 1, y] = Box;
                             maze.maze[x, y] = new EmptyBox();
@@ -328,7 +333,7 @@ namespace Maze_Runners
                     }
                     else if (move.Key == ConsoleKey.RightArrow || move.Key == ConsoleKey.D)
                     {
-                        while (maze.maze[x, y + 1].GetType() == typeof(EmptyBox))
+                        while (maze.maze[x, y + 1] is EmptyBox)
                         {
                             maze.maze[x, y + 1] = Box;
                             maze.maze[x, y] = new EmptyBox();
@@ -347,7 +352,7 @@ namespace Maze_Runners
                         int new_x = new Random().Next(maze.scale);
                         int new_y = new Random().Next(maze.scale);
 
-                        if (maze.maze[new_x, new_y].GetType() == typeof(EmptyBox))
+                        if (maze.maze[new_x, new_y] is EmptyBox)
                         {
                             maze.maze[x, y] = new EmptyBox();
                             maze.maze[new_x, new_y] = Box;

@@ -1,11 +1,11 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v3.0",
+    "name": ".NETCoreApp,Version=v9.0",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v3.0": {
+    ".NETCoreApp,Version=v9.0": {
       "Maze_Runners/1.0.0": {
         "dependencies": {
           "Spectre.Console": "0.49.1",
@@ -16,11 +16,8 @@
         }
       },
       "Spectre.Console/0.49.1": {
-        "dependencies": {
-          "System.Memory": "4.5.5"
-        },
         "runtime": {
-          "lib/netstandard2.0/Spectre.Console.dll": {
+          "lib/net8.0/Spectre.Console.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.49.1.0"
           }
@@ -31,24 +28,23 @@
           "Spectre.Console": "0.49.1"
         },
         "runtime": {
-          "lib/netstandard2.0/Spectre.Console.Cli.dll": {
+          "lib/net8.0/Spectre.Console.Cli.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.49.1.0"
           }
         },
         "resources": {
-          "lib/netstandard2.0/de/Spectre.Console.Cli.resources.dll": {
+          "lib/net8.0/de/Spectre.Console.Cli.resources.dll": {
             "locale": "de"
           },
-          "lib/netstandard2.0/fr/Spectre.Console.Cli.resources.dll": {
+          "lib/net8.0/fr/Spectre.Console.Cli.resources.dll": {
             "locale": "fr"
           },
-          "lib/netstandard2.0/sv/Spectre.Console.Cli.resources.dll": {
+          "lib/net8.0/sv/Spectre.Console.Cli.resources.dll": {
             "locale": "sv"
           }
         }
-      },
-      "System.Memory/4.5.5": {}
+      }
     }
   },
   "libraries": {
@@ -70,13 +66,6 @@
       "sha512": "sha512-wBZzyEbKqfPFFUPhV5E7/k4Kwy4UDO42IVzvzk0C4Pkjjw+NSd0EOBkIutYET4vJY4X81pD9ooQO9gfBGXj4+g==",
       "path": "spectre.console.cli/0.49.1",
       "hashPath": "spectre.console.cli.0.49.1.nupkg.sha512"
-    },
-    "System.Memory/4.5.5": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
-      "path": "system.memory/4.5.5",
-      "hashPath": "system.memory.4.5.5.nupkg.sha512"
     }
   }
 }

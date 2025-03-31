@@ -92,6 +92,7 @@ namespace Maze_Runners
             if(mainMenu.SelectedOption=="How to play")
             {
                 HowToPlayInfo();
+                StartMainMenu();
             }
 
             // Sale del juego
@@ -209,7 +210,6 @@ namespace Maze_Runners
             AnsiConsole.Markup("[grey37]    (Press any key to return to the Main Menu)...   [/]");
 
             Console.ReadKey(true);
-            StartMainMenu();
         }
 
         // Menu de selecion de jugadores
@@ -220,37 +220,17 @@ namespace Maze_Runners
             playerSelectionMenu.SetMenu();
 
             PlayersList = new List<Player>();
+            int p;
 
-            if (playerSelectionMenu.SelectedOption == "2 players") 
+            if (playerSelectionMenu.SelectedOption == "2 players") p = 2;
+            else if (playerSelectionMenu.SelectedOption == "3 players") p = 3;
+            else p = 4;
+
+            for(int i = 0; i < p; i++)
             {
-                Player player1 = GeneratePlayer(1);
-                PlayersList.Add(player1);
-                Player player2 = GeneratePlayer(2);
-                PlayersList.Add(player2);
+                PlayersList.Add(GeneratePlayer(i + 1));
             }
-
-            if (playerSelectionMenu.SelectedOption == "3 players") 
-            {
-                Player player1 = GeneratePlayer(1);
-                PlayersList.Add(player1);
-                Player player2 = GeneratePlayer(2);
-                PlayersList.Add(player2);
-                Player player3 = GeneratePlayer(3);
-                PlayersList.Add(player3);
-            }
-
-            if (playerSelectionMenu.SelectedOption == "4 players") 
-            {
-                Player player1 = GeneratePlayer(1);
-                PlayersList.Add(player1);
-                Player player2 = GeneratePlayer(2);
-                PlayersList.Add(player2);
-                Player player3 = GeneratePlayer(3);
-                PlayersList.Add(player3);
-                Player player4 = GeneratePlayer(4);
-                PlayersList.Add(player4);
-            }
-
+            
             AnsiConsole.Write(new FigletText("LET'S PLAY!!!").Color(Color.Red));
 
             Console.ReadKey(true);
@@ -365,7 +345,7 @@ namespace Maze_Runners
         // Mantiene el juego mientras no se cumpla la condicion de victoria
         private static void KeepPlaying()
         {
-            while (maze.maze[maze.scale / 2, maze.scale / 2].GetType() == typeof(WinnerBox))
+            while (maze.maze[maze.scale / 2, maze.scale / 2] is WinnerBox)
             {
                 foreach (Player player in PlayersList)
                 {
@@ -373,7 +353,7 @@ namespace Maze_Runners
                     PrintInfo(PlayersList);
                     player.piece.Move(maze);
 
-                    if (maze.maze[maze.scale / 2, maze.scale / 2].GetType() != typeof(WinnerBox))
+                    if (maze.maze[maze.scale / 2, maze.scale / 2] is not WinnerBox)
                     {
                         SetWinner(player);
                         break;

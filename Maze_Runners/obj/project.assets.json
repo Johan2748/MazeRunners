@@ -1,17 +1,18 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.0": {
+    "net9.0": {
       "Spectre.Console/0.49.1": {
         "type": "package",
-        "dependencies": {
-          "System.Memory": "4.5.5"
-        },
         "compile": {
-          "lib/netstandard2.0/Spectre.Console.dll": {}
+          "lib/net8.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Spectre.Console.dll": {}
+          "lib/net8.0/Spectre.Console.dll": {
+            "related": ".xml"
+          }
         }
       },
       "Spectre.Console.Cli/0.49.1": {
@@ -20,30 +21,25 @@
           "Spectre.Console": "0.49.1"
         },
         "compile": {
-          "lib/netstandard2.0/Spectre.Console.Cli.dll": {}
+          "lib/net8.0/Spectre.Console.Cli.dll": {
+            "related": ".xml"
+          }
         },
         "runtime": {
-          "lib/netstandard2.0/Spectre.Console.Cli.dll": {}
+          "lib/net8.0/Spectre.Console.Cli.dll": {
+            "related": ".xml"
+          }
         },
         "resource": {
-          "lib/netstandard2.0/de/Spectre.Console.Cli.resources.dll": {
+          "lib/net8.0/de/Spectre.Console.Cli.resources.dll": {
             "locale": "de"
           },
-          "lib/netstandard2.0/fr/Spectre.Console.Cli.resources.dll": {
+          "lib/net8.0/fr/Spectre.Console.Cli.resources.dll": {
             "locale": "fr"
           },
-          "lib/netstandard2.0/sv/Spectre.Console.Cli.resources.dll": {
+          "lib/net8.0/sv/Spectre.Console.Cli.resources.dll": {
             "locale": "sv"
           }
-        }
-      },
-      "System.Memory/4.5.5": {
-        "type": "package",
-        "compile": {
-          "ref/netcoreapp2.1/_._": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.1/_._": {}
         }
       }
     }
@@ -100,67 +96,38 @@
         "spectre.console.cli.0.49.1.nupkg.sha512",
         "spectre.console.cli.nuspec"
       ]
-    },
-    "System.Memory/4.5.5": {
-      "sha512": "XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
-      "type": "package",
-      "path": "system.memory/4.5.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/System.Memory.dll",
-        "lib/net461/System.Memory.xml",
-        "lib/netcoreapp2.1/_._",
-        "lib/netstandard1.1/System.Memory.dll",
-        "lib/netstandard1.1/System.Memory.xml",
-        "lib/netstandard2.0/System.Memory.dll",
-        "lib/netstandard2.0/System.Memory.xml",
-        "ref/netcoreapp2.1/_._",
-        "system.memory.4.5.5.nupkg.sha512",
-        "system.memory.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
-      ]
     }
   },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.0": [
+    "net9.0": [
       "Spectre.Console >= 0.49.1",
       "Spectre.Console.Cli >= 0.49.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PC\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Johan\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\Documents\\GitHub\\Proyecto de programacion\\MazeRunners\\Maze_Runners\\Maze_Runners.csproj",
+      "projectUniqueName": "C:\\Users\\Johan\\Desktop\\MatCom\\Proyectos\\MazeRunners\\Maze_Runners\\Maze_Runners.csproj",
       "projectName": "Maze_Runners",
-      "projectPath": "C:\\Users\\PC\\Documents\\GitHub\\Proyecto de programacion\\MazeRunners\\Maze_Runners\\Maze_Runners.csproj",
-      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\Documents\\GitHub\\Proyecto de programacion\\MazeRunners\\Maze_Runners\\obj\\",
+      "projectPath": "C:\\Users\\Johan\\Desktop\\MatCom\\Proyectos\\MazeRunners\\Maze_Runners\\Maze_Runners.csproj",
+      "packagesPath": "C:\\Users\\Johan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Johan\\Desktop\\MatCom\\Proyectos\\MazeRunners\\Maze_Runners\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\Johan\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "netcoreapp3.0"
+        "netcoreapp9.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "netcoreapp3.0": {
+        "net9.0": {
+          "targetAlias": "netcoreapp9.0",
           "projectReferences": {}
         }
       },
@@ -168,10 +135,17 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
-      "netcoreapp3.0": {
+      "net9.0": {
+        "targetAlias": "netcoreapp9.0",
         "dependencies": {
           "Spectre.Console": {
             "target": "Package",
@@ -188,7 +162,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -197,7 +172,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

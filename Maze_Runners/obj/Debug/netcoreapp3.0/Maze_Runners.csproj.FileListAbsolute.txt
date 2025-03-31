@@ -1,5 +1,4 @@
 C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\bin\Debug\netcoreapp3.0\Maze_Runners.exe
-C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.csprojAssemblyReference.cache
 C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.AssemblyInfoInputs.cache
 C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.AssemblyInfo.cs
 C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\bin\Debug\netcoreapp3.0\Spectre.Console.dll
@@ -15,3 +14,7 @@ C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\b
 C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\bin\Debug\netcoreapp3.0\sv\Spectre.Console.Cli.resources.dll
 C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.dll
 C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.pdb
+C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.csproj.AssemblyReference.cache
+C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.csproj.CoreCompileInputs.cache
+C:\Users\PC\Documents\GitHub\Proyecto de programacion\MazeRunners\Maze_Runners\obj\Debug\netcoreapp3.0\Maze_Runners.genruntimeconfig.cache

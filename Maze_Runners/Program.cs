@@ -8,8 +8,8 @@ namespace Maze_Runners
         static void Main(string[] args)
         {
             // Establece el tamaño de la consola
-            Console.BufferHeight = 50;
-            Console.BufferWidth = 180;
+            Console.BufferHeight = Console.LargestWindowHeight;
+            Console.BufferWidth = Console.LargestWindowWidth;
 
             // Imprime la Historia del juego cuando se abre la aplicacion
             GameManager.SetGameStory();

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "VDQ0mqBUXMM=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Johan\\Desktop\\MatCom\\Proyectos\\MazeRunners\\Maze_Runners\\Maze_Runners.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Johan\\.nuget\\packages\\spectre.console\\0.49.1\\spectre.console.0.49.1.nupkg.sha512",
+    "C:\\Users\\Johan\\.nuget\\packages\\spectre.console.cli\\0.49.1\\spectre.console.cli.0.49.1.nupkg.sha512"
+  ],
+  "logs": []
+}
